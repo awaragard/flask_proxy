@@ -1,0 +1,6 @@
+server:
+    port: 8080
+    debug: false
+    logging_cfg: logger_config.yaml
+    logs_root: logs
+    console_log_level: DEBUG

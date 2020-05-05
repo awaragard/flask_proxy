@@ -41,9 +41,10 @@ setup(name='ust-proxy',
       packages=find_packages(),
       install_requires=[
           'Werkzeug',
-          'Flask',
+          'flask',
           'PyYAML',
-          'requests'
+          'requests',
+          'qparse'
       ],
       extras_require={
           'test': test_deps,

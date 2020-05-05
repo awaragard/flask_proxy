@@ -1,8 +1,12 @@
 from datetime import datetime
 from http import HTTPStatus
 
-from ust_proxy.parse_utils import parse_exception, as_list, displaytime
+from qconf import parse_exception, as_list
 
+def displaytime(date=None):
+    if date and not isinstance(date, datetime):
+        return date
+    return (date or datetime.now()).strftime('%Y/%m/%d %H:%M:%S')
 
 class ApiError(Exception):
     status_code = 400

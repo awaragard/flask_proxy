@@ -44,7 +44,7 @@ setup(name='ust-proxy',
           'flask',
           'PyYAML',
           'requests',
-          'qparse'
+          'qconf'
       ],
       extras_require={
           'test': test_deps,

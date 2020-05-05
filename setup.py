@@ -26,7 +26,7 @@ with open('flask_proxy/version.py') as f:
 
 test_deps = ['mock', 'pytest']
 
-setup(name='ust-proxy',
+setup(name='flask-proxy',
       version=version_namespace['__version__'],
       description='Web proxy for HTTP testing',
       classifiers=[
@@ -50,9 +50,9 @@ setup(name='ust-proxy',
           'test': test_deps,
       },
       tests_require=test_deps,
-      # entry_points={
-      #     'console_scripts': [
-      #         'user_sync = user_sync.app:main'
-      #     ]
-      # },
+      entry_points={
+          'console_scripts': [
+              'flask_proxy = flask_proxy.app:main'
+          ]
+      },
       )

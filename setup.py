@@ -44,7 +44,8 @@ setup(name='flask-proxy',
           'flask',
           'PyYAML',
           'requests',
-          'qconf'
+          'qconf',
+          'cryptography'
       ],
       extras_require={
           'test': test_deps,

@@ -1,0 +1,3 @@
+cassette_dir: fixtures/vcr_cassettes
+record_mode: all
+request_base_url: dummy.restapiexample.com

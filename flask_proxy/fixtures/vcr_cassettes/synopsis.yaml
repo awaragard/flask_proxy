@@ -1,0 +1,74 @@
+interactions:
+- request:
+    body: '{"name": "test", "salary": "123", "age": "23"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '46'
+      Content-Type:
+      - application/json
+      Cookie:
+      - PHPSESSID=ac0187a89944b9b4a218e2fb5392800b
+      Host:
+      - dummy.restapiexample.com
+      Postman-Token:
+      - f72a126d-b36b-41e2-966c-faa95e6f271f
+      User-Agent:
+      - PostmanRuntime/7.24.1
+    method: POST
+    uri: http://dummy.restapiexample.com/api/v1/create
+  response:
+    body:
+      string: '{"status":"success","data":{"name":"test","salary":"123","age":"23","id":99}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Content-Type, X-Requested-With, X-authentication, X-client
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Content-Length:
+      - '77'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 13 May 2020 20:36:40 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Host-Header:
+      - c2hhcmVkLmJsdWVob3N0LmNvbQ==
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - ''
+      Response:
+      - '200'
+      Server:
+      - nginx/1.16.0
+      Set-Cookie:
+      - ezoadgid_133674=-1; Path=/; Domain=restapiexample.com; Expires=Wed, 13 May
+        2020 21:06:40 UTC
+      - ezoref_133674=; Path=/; Domain=restapiexample.com; Expires=Wed, 13 May 2020
+        22:36:40 UTC
+      - ezoab_133674=mod1; Path=/; Domain=restapiexample.com; Expires=Wed, 13 May
+        2020 22:36:40 UTC
+      - active_template::133674=pub_site.1589402200; Path=/; Domain=restapiexample.com;
+        Expires=Fri, 15 May 2020 20:36:40 UTC
+      Vary:
+      - Accept-Encoding
+      - Accept-Encoding,X-APP-JSON
+      X-Middleton-Response:
+      - '200'
+      X-Sol:
+      - pub_site
+    status:
+      code: 200
+      message: OK
+version: 1

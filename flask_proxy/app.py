@@ -15,6 +15,10 @@ c = QConfig.from_yaml(get_resource("app.yaml"))
 server_cfg = c.get_sub_config('server')
 config.init_logger(c['logging'])
 
+external_cfg_path = get_resource("test_default.yaml")
+external_cfg = QConfig.from_yaml(external_cfg_path)
+view.options = external_cfg
+view.init_vcr()
 # Init application
 application = Flask(__name__,
                     template_folder=get_resource('templates'),
@@ -30,4 +34,7 @@ if __name__ == '__main__':
         debug=False,
         use_reloader=False,
         ssl_context='adhoc'
+
     )
+
+

@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate, br
+      Cache-Control:
+      - no-cache
+      Connection:
+      - keep-alive
+      Cookie:
+      - PHPSESSID=ac0187a89944b9b4a218e2fb5392800b
+      Host:
+      - dummy.restapiexample.com
+      Postman-Token:
+      - b91a0ab5-0087-48df-a45c-bc89abb6d4db
+      User-Agent:
+      - PostmanRuntime/7.24.1
+    method: GET
+    uri: http://dummy.restapiexample.com/api/v1/employees
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/6yVX2vcOBTFv4rQcx5syX/nbWdCJmw2y24SGkop4TK+zYhqpHAtp3FDvnsZ2oe0
+        HNu05HXE6OcjnfvTs+4TpaHXK90Pux33vT7RHSXSqw/P2nV6pXN9ovnw4OPIfBfowHqlb9w9i/rX
+        PcXwerUnTzLqlbYma7Ls9RLdH/9XHTd7kPjJeb5zh+8/6peTHygDUFsS4ZTUrQuJpYe4vM7qEuHs
+        LM4C3F/9PsWgNvEJkpoqg7mqWVABQBvuxO3UBXs/QlRhbVYBljGzrBKFcuLUNaU44OOrTI1S2fnj
+        qwBpLY69Z3XrvHd06Kf6URt8jvP9qAHxnEVipzZ7Cp1nwQFtXSJc2c7iGoC72sdA6pQeXTcZztQt
+        pJWztBaVJHrPHNT5IH2CMJOVMJqdj5ZngHYdw0jqTOIEK89shVhmvic5MsjfHEhtyQXGI91mJSq/
+        zeZRyCD/Dy4EdebHMHFfBS7jwqDlSB+bPUnH6pKk35P3eLDrDB6jnZdIjixyTp5HdcEhcIc1YnML
+        C1IsXBryyA2lkQKpM5e+PlASt/uMmU0JfZwvlBIZ5dLt9sReXTv/SLiWbQMTLkg5Rzb5jwav1qN0
+        kFSbEmurmCchkWx9FEfqH5eSZzzaf2atHIlkLdQdm7IVnnQknoJi4clGIjklp65cxJNtchzLzuvR
+        TFiEU2K1Id994Yl5swW+tQWXGOSS94M4tWYRPGxVjVHFAgqqhLgnUe8o7HA/8qwq0JSZhRtDHjmN
+        4vrjq91N1KMpf1P9vxIST70qP6d/te/xc8vmDTdr67fcrH35+PItAAD//wjfW/pACwAA
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Content-Type, X-Requested-With, X-authentication, X-client
+      Cache-Control:
+      - no-store, no-cache, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '621'
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Wed, 13 May 2020 20:36:59 GMT
+      Expires:
+      - Thu, 19 Nov 1981 08:52:00 GMT
+      Host-Header:
+      - c2hhcmVkLmJsdWVob3N0LmNvbQ==
+      Pragma:
+      - no-cache
+      Referrer-Policy:
+      - ''
+      Response:
+      - '200'
+      Server:
+      - nginx/1.16.0
+      Set-Cookie:
+      - ezoadgid_133674=-2; Path=/; Domain=restapiexample.com; Expires=Wed, 13 May
+        2020 21:06:58 UTC
+      - ezoref_133674=; Path=/; Domain=restapiexample.com; Expires=Wed, 13 May 2020
+        22:36:58 UTC
+      - ezoab_133674=mod92-c; Path=/; Domain=restapiexample.com; Expires=Wed, 13 May
+        2020 22:36:58 UTC
+      - active_template::133674=pub_site.1589402218; Path=/; Domain=restapiexample.com;
+        Expires=Fri, 15 May 2020 20:36:58 UTC
+      Vary:
+      - Accept-Encoding
+      - Accept-Encoding,X-APP-JSON
+      X-Middleton-Response:
+      - '200'
+      X-Sol:
+      - pub_site
+    status:
+      code: 200
+      message: OK
+version: 1

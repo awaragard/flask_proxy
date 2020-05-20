@@ -52,3 +52,6 @@ class ApiError(Exception):
             rv['traceback'] = self.traceback
         rv['timestamp'] = displaytime(self.timestamp)
         return rv
+
+class VCRAssertionFailure(Exception):
+    pass

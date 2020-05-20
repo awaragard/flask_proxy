@@ -45,7 +45,10 @@ setup(name='flask-proxy',
           'PyYAML',
           'requests',
           'qconf',
-          'cryptography'
+          'cryptography',
+          'vcrpy',
+          'Click',
+          'click_default_group'
       ],
       extras_require={
           'test': test_deps,

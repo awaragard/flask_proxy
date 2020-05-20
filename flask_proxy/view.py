@@ -2,14 +2,13 @@ import logging
 
 import requests
 from flask import Blueprint, jsonify, Response, request
-from qconf import decode
-
-from flask_proxy.config import ProxyConfig
-from flask_proxy.error import ApiError, VCRAssertionFailure
 from vcr.errors import CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError
 
+from flask_proxy.config import ProxyOptions
+from flask_proxy.error import ApiError, VCRAssertionFailure
+
 view = Blueprint('view', __name__, url_prefix='')
-proxy_opts = ProxyConfig()
+proxy_opts = ProxyOptions()
 logger = logging.getLogger()
 
 

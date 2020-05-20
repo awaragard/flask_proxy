@@ -1,7 +1,6 @@
 from datetime import datetime
 from http import HTTPStatus
-
-from qconf import parse_exception, as_list
+from traceback import TracebackException
 
 def displaytime(date=None):
     if date and not isinstance(date, datetime):
@@ -19,7 +18,10 @@ class ApiError(Exception):
             self.traceback = parse_exception(error)
 
             if chain:
-                self.chain = [parse_exception(e) for e in as_list(chain)]
+                if isinstance(chain, list):
+                    self.chain = [parse_exception(e) for e in chain]
+                else:
+                    self.chain = parse_exception(chain)
             try:
                 self.error = type(error).__name__
             except:
@@ -55,3 +57,19 @@ class ApiError(Exception):
 
 class VCRAssertionFailure(Exception):
     pass
+
+
+def parse_exception(exc, extra_msg=''):
+    if not exc:
+        return []
+    exc_list = exc
+    if isinstance(exc, Exception):
+        tbe = TracebackException(type(exc), exc, exc.__traceback__)
+        exc_list = tbe.format()
+    lines = []
+    for l in exc_list:
+        lines.extend(l.split('\n'))
+    lines.append(extra_msg)
+    return list(map(
+        lambda x: x.strip(), filter(lambda x: x, lines)))
+

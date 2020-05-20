@@ -1,0 +1,8 @@
+
+port: 8088
+base_url: dummy.restapiexample.com
+protocol: http
+vcr_enabled: true
+cassette_dir: cassettes
+record_mode: once
+match_on: ['uri', 'method', 'raw_body']

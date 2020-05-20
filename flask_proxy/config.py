@@ -1,54 +1,44 @@
 import logging
 import logging.config
 import os
-from os.path import dirname, realpath, join
 
 import vcr
-from qconf import QConfig, parse_path
+import yaml
 
 
-class ProxyConfig():
-    def __init__(self, config_file=None):
-        self.vcr = None
-        self.base_url = None
-        self.vcr_opts = None
+class ProxyOptions():
+    def __init__(self,
+                 base_url=None,
+                 protocol='https',
+                 port=8080,
+                 cassette_dir='cassettes',
+                 record_mode='once',
+                 match_on=None,
+                 vcr_enabled=True):
+        self.base_url = base_url
+        self.protocol = protocol
+        self.port = port
+        self.record_mode = record_mode
+        self.cassette_dir = cassette_dir
+        self.vcr_enabled = vcr_enabled
+        self.match_on = match_on or ['uri', 'method', 'raw_body']
         self.logger = logging.getLogger("proxy")
+        self.logger.info("Initialized with options: {}".format(vars(self)))
 
-        if config_file:
-            self.load_file(config_file)
-
-    def load_file(self, path):
-
-        self.logger.info("Reading proxy configuration from: {}".format(path))
-        options = QConfig.from_yaml(path)
-        self.base_url = options.get_string("base_url", required=True)
-        self.protocol = options.get_string("protocol", "https")
-        vcr_config = options.get_sub_config("vcr")
-        self.config_root = dirname(realpath(path))
-        cassette_dir = vcr_config.get_string("cassette_dir", "cassettes")
-        if not os.path.isabs(cassette_dir):
-            cassette_dir = join(self.config_root, cassette_dir)
-        cassette_dir = parse_path(cassette_dir)
-
-        self.vcr_enabled = vcr_config.get_bool("enabled")
-        self.vcr_opts = {
-            'record_mode': vcr_config.get_string("record_mode", "once"),
-            'match_on': vcr_config.get_list("match_on", ['uri', 'method', 'raw_body']),
-            'cassette_library_dir': cassette_dir
-        }
-
-        self.vcr = vcr.VCR(**self.vcr_opts)
-        init_opts = {'protocol': self.protocol, 'base_url': self.base_url,
-                     'config_root': self.config_root, 'vcr_opts': self.vcr_opts}
-        self.logger.info("Initialized with options: {}".format(init_opts))
+        self.vcr = vcr.VCR(
+            record_mode=self.record_mode,
+            cassette_library_dir=self.cassette_dir,
+            match_on=self.match_on
+        )
 
 
-def init_logger(logging_config):
+def init_logger(path):
+    with open(path) as f:
+        logging_config = yaml.safe_load(f)
     logs_root = logging_config.get('logs_root', 'logs')
     for k, h in logging_config['handlers'].items():
         filename = h.get('filename')
         if filename:
-            filename = parse_path(filename)
             if not filename == os.path.abspath(filename):
                 filename = os.path.join(logs_root, filename)
             h['filename'] = filename

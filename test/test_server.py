@@ -33,7 +33,7 @@ def get_name():
 
 def get_opts(test_name):
     opts = test_opts.copy()
-    opts['cassette_dir'] = 'cassette/' + str(test_name)
+    opts['cassette_dir'] = 'cassettes/' + str(test_name)
     return opts
 
 

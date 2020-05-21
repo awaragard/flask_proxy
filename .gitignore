@@ -22,7 +22,7 @@ sdist/
 var/
 venv/
 wheels/
-cassette/
+cassettes/
 
 *.egg-info/
 .installed.cfg

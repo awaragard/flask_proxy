@@ -23,7 +23,8 @@ class ProxyServer(threading.Thread):
                  cassette_dir=None,
                  record_mode=None,
                  match_on=None,
-                 vcr_enabled=None):
+                 vcr_enabled=None,
+                 log_level=None):
         super().__init__()
 
         file_opts = {}
@@ -41,8 +42,9 @@ class ProxyServer(threading.Thread):
         self.cassette_dir = invoc_opts['cassette_dir'] = cassette_dir or file_opts.get('cassette_dir', 'cassettes')
         self.vcr_enabled = invoc_opts['vcr_enabled'] = vcr_enabled or file_opts.get('vcr_enabled', True)
         self.match_on = invoc_opts['match_on'] = match_on or file_opts.get('match_on') or ['uri', 'method', 'raw_body']
+        self.log_level = invoc_opts['log_level'] = log_level or file_opts.get('log_level', logging.DEBUG)
         self.host = invoc_opts['host'] = '{}://localhost:{}'.format(self.protocol, self.port)
-        self.start_async = self.start
+        self.daemon = True
         self.invoc_opts = invoc_opts
 
         self.vcr = vcr.VCR(
@@ -52,6 +54,7 @@ class ProxyServer(threading.Thread):
             decode_compressed_response=True
         )
 
+        logging.getLogger().setLevel(self.log_level)
         self.logger = view.logger = logging.getLogger("proxy")
         self.logger.info("Initialized with options: {}".format(invoc_opts))
         view.proxy_server = self
@@ -72,13 +75,23 @@ class ProxyServer(threading.Thread):
         )
 
     def run(self):
-        self.start_server()
+        try:
+            self.start_server()
+        except RuntimeError:
+            print()
 
     def start_sync(self):
         self.start_server()
 
+    def start_async(self):
+        self.start()
+        return self
+
     def shutdown(self):
         requests.get(self.host + '/shutdown')
+        # time.sleep(3)
+        # if self.is_server_running():
+        #     raise RuntimeError("shutdown")
 
     def is_server_running(self):
         try:

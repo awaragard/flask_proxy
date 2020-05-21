@@ -55,7 +55,7 @@ class ApiError(Exception):
         return rv
 
 
-class VCRAssertionError(Exception):
+class VCRAssertionError(ApiError):
     pass
 
 
@@ -98,6 +98,10 @@ class ErrorHandler:
 
 def register(view):
     @view.view.errorhandler(ApiError)
+    def handle_error(error):
+        return ErrorHandler.api_error_handler(error)
+
+    @view.view.errorhandler(VCRAssertionError)
     def handle_error(error):
         return ErrorHandler.api_error_handler(error)
 

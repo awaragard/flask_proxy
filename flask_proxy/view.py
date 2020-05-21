@@ -34,7 +34,7 @@ def get(path):
         resp = make_call(url, headers=headers, cassette='get-{}.yml'.format(encoded_host))
         return build_response(resp)
     except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
-        raise VCRAssertionError("VCR assertion failed", e)
+        raise VCRAssertionError("VCR assertion failed", e, status_code=417)
     except Exception as e:
         raise ApiError("Unhandled exception occured", e, status_code=500)
 
@@ -60,7 +60,7 @@ def ping():
 # noinspection PyUnresolvedReferences
 @view.route('/shutdown', methods=['GET'])
 def shutdown_server():
-    logger.warn("Server will shut down")
+    logger.warning("Server will shut down")
     request.environ.get('werkzeug.server.shutdown')
     return jsonify('shutting down')
 

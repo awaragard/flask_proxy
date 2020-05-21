@@ -1,11 +1,10 @@
+import logging
 from datetime import datetime
 from http import HTTPStatus
 from traceback import TracebackException
 
-def displaytime(date=None):
-    if date and not isinstance(date, datetime):
-        return date
-    return (date or datetime.now()).strftime('%Y/%m/%d %H:%M:%S')
+from flask import jsonify
+from werkzeug.exceptions import NotFound
 
 class ApiError(Exception):
     status_code = 400
@@ -52,10 +51,11 @@ class ApiError(Exception):
             rv['error'] = self.error
             rv['error_message'] = self.error_msg
             rv['traceback'] = self.traceback
-        rv['timestamp'] = displaytime(self.timestamp)
+        rv['timestamp'] = self.timestamp.strftime('%Y/%m/%d %H:%M:%S')
         return rv
 
-class VCRAssertionFailure(Exception):
+
+class VCRAssertionError(Exception):
     pass
 
 
@@ -73,3 +73,34 @@ def parse_exception(exc, extra_msg=''):
     return list(map(
         lambda x: x.strip(), filter(lambda x: x, lines)))
 
+
+class ErrorHandler:
+    @classmethod
+    def api_error_handler(cls, api_error):
+        response = jsonify(api_error.serialize())
+        response.status_code = api_error.status_code
+        return response
+
+    @classmethod
+    def generic_error_handler(cls, error):
+        """
+        Unknown errors during API call
+        Don't log/report simple 404 errors!
+        """
+        if isinstance(error, NotFound):
+            status_code = 404
+        else:
+            status_code = 500
+            logging.getLogger().error(error)
+        api_err = ApiError(str(error), error, status_code)
+        return cls.api_error_handler(api_err)
+
+
+def register(view):
+    @view.view.errorhandler(ApiError)
+    def handle_error(error):
+        return ErrorHandler.api_error_handler(error)
+
+    @view.view.errorhandler(Exception)
+    def handle_error(error):
+        return ErrorHandler.generic_error_handler(error)

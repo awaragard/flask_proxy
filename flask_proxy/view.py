@@ -1,28 +1,24 @@
-import logging
+import base64
 
 import requests
 from flask import Blueprint, jsonify, Response, request
 from vcr.errors import CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError
 
-from flask_proxy.config import ProxyOptions
-from flask_proxy.error import ApiError, VCRAssertionFailure
+from flask_proxy.error import ApiError, VCRAssertionError
 
 view = Blueprint('view', __name__, url_prefix='')
-proxy_opts = ProxyOptions()
-logger = logging.getLogger()
+logger = None
+proxy_server = None
 
 
-@view.route('/', methods=['GET'])
-def home():
-    return jsonify("hello")
-
-
+# noinspection PyUnresolvedReferences
 def build_request(request, path):
-    target = proxy_opts.base_url
+    target = proxy_server.base_url
     headers = dict(request.headers)
     headers['Host'] = target
-    url = '{0}://{1}/{2}'.format(proxy_opts.protocol, target, path)
-    return url, headers
+    url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, path)
+    encoded_host = base64.b64encode(headers['Host'].encode())
+    return url, headers, encoded_host
 
 
 def build_response(response):
@@ -33,23 +29,43 @@ def build_response(response):
 
 @view.route('/<path:path>', methods=['GET'])
 def get(path):
-    url, headers = build_request(request, path)
-    resp = make_call(url, headers=headers, cassette='getreq.yaml')
-    return build_response(resp)
+    try:
+        url, headers, encoded_host = build_request(request, path)
+        resp = make_call(url, headers=headers, cassette='get-{}.yml'.format(encoded_host))
+        return build_response(resp)
+    except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
+        raise VCRAssertionError("VCR assertion failed", e)
+    except Exception as e:
+        raise ApiError("Unhandled exception occured", e, status_code=500)
 
 
 @view.route('/<path:path>', methods=['POST'])
 def post(path):
     try:
-        url, headers = build_request(request, path)
-        resp = make_call(url, method='POST', headers=headers, body=request.data, cassette='postreq.yaml')
+        url, headers, encoded_host = build_request(request, path)
+        resp = make_call(url, method='POST', headers=headers,
+                         body=request.data, cassette='post-{}.yml'.format(encoded_host))
         return build_response(resp)
     except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
-        raise VCRAssertionFailure("VCR assertion failed", e)
+        raise VCRAssertionError("VCR assertion failed", e)
     except Exception as e:
         raise ApiError("Unhandled exception occured", e, status_code=500)
 
 
+@view.route('/ping', methods=['GET'])
+def ping():
+    return jsonify("alive")
+
+
+# noinspection PyUnresolvedReferences
+@view.route('/shutdown', methods=['GET'])
+def shutdown_server():
+    logger.warn("Server will shut down")
+    request.environ.get('werkzeug.server.shutdown')
+    return jsonify('shutting down')
+
+
+# noinspection PyUnresolvedReferences
 def make_call(url, method='GET', body=None, headers=None, auth=None, cassette=None):
     request_params = {'url': url}
 
@@ -70,7 +86,7 @@ def make_call(url, method='GET', body=None, headers=None, auth=None, cassette=No
         def call():
             return requests.get(**request_params)
 
-    if proxy_opts.vcr_enabled:
-        with proxy_opts.vcr.use_cassette(cassette):
+    if proxy_server.vcr_enabled:
+        with proxy_server.vcr.use_cassette(cassette):
             return call()
     return call()

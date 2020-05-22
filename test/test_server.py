@@ -7,6 +7,7 @@ from flask_proxy import ProxyServer
 
 global gps
 
+test_headers = {'User-Agent': 'none'}
 test_opts = {
     'base_url': 'dummy.restapiexample.com',
     'protocol': 'http',
@@ -25,11 +26,14 @@ def proxy_server():
         global gps
         gps = ProxyServer(**opts).start_async()
         return gps
+
     yield _proxy_server
     gps.shutdown()
 
+
 def get_name():
     return sys._getframe(1).f_code.co_name
+
 
 def get_opts(test_name):
     opts = test_opts.copy()
@@ -40,10 +44,8 @@ def get_opts(test_name):
 def test_simple(proxy_server):
     opts = get_opts(get_name())
     p = proxy_server(opts)
-    resp = requests.get(p.host + '/api/v1/employees')
+
+    resp = requests.get(p.host + '/api/v1/employees', headers=test_headers)
     assert resp.status_code == 200
     resp = requests.get(p.host + '/api/v1/badurl')
     assert resp.status_code == 417
-
-
-

@@ -1,5 +1,4 @@
 import base64
-
 import requests
 from flask import Blueprint, jsonify, Response, request
 from vcr.errors import CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError
@@ -85,7 +84,6 @@ def make_call(url, method='GET', body=None, headers=None, auth=None, cassette=No
     else:
         def call():
             return requests.get(**request_params)
-
     if proxy_server.vcr_enabled:
         with proxy_server.vcr.use_cassette(cassette):
             return call()

@@ -1,8 +1,10 @@
+import subprocess
 import sys
 
+import os
 import pytest
 import requests
-
+from test.resources import get_resource
 from flask_proxy import ProxyServer
 
 global gps
@@ -49,3 +51,13 @@ def test_simple(proxy_server):
     assert resp.status_code == 200
     resp = requests.get(p.host + '/api/v1/badurl')
     assert resp.status_code == 417
+
+
+def test_ust_simple(capsys):
+    exe_path = get_resource("user-sync.exe")
+    test_path = get_resource("simple_csv")
+
+    os.chdir(test_path)
+    result = subprocess.check_output(exe_path)
+    with capsys.disabled():
+        print(result.decode())

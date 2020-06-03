@@ -1,4 +1,5 @@
-import base64
+import urllib.parse
+
 import requests
 from flask import Blueprint, jsonify, Response, request
 from vcr.errors import CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError
@@ -11,13 +12,26 @@ proxy_server = None
 
 
 # noinspection PyUnresolvedReferences
-def build_request(request, path):
+def generate_cassette_name(url, request):
+    name = urllib.parse.quote_plus(proxy_server.base_url + request.full_path)
+    try:
+        data = request.data.decode()
+        if data:
+            data = urllib.parse.quote_plus(data)
+            name += data[:45] + data[-20] + "-" + str(len(data))
+    except:
+        logger.warning("Failed to create cassette filename for {} with data - taking URL only!".format(url))
+        pass
+    return name
+
+
+# noinspection PyUnresolvedReferences
+def build_request(request):
     target = proxy_server.base_url
     headers = dict(request.headers)
     headers['Host'] = target
-    url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, path)
-    encoded_host = base64.b64encode(url.encode())
-    return url, headers, encoded_host
+    url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, request.full_path)
+    return url, headers
 
 
 def build_response(response):
@@ -29,8 +43,9 @@ def build_response(response):
 @view.route('/<path:path>', methods=['GET'])
 def get(path):
     try:
-        url, headers, encoded_host = build_request(request, path)
-        resp = make_call(url, headers=headers, cassette='get-{}.yml'.format(encoded_host))
+        url, headers = build_request(request)
+        resp = make_call(url, headers=headers, cassette='get-{}.yml'
+                         .format(generate_cassette_name(url, request)))
         return build_response(resp)
     except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
         raise VCRAssertionError("VCR assertion failed", e, status_code=417)
@@ -41,9 +56,10 @@ def get(path):
 @view.route('/<path:path>', methods=['POST'])
 def post(path):
     try:
-        url, headers, encoded_host = build_request(request, path)
+        url, headers = build_request(request)
         resp = make_call(url, method='POST', headers=headers,
-                         body=request.data, cassette='post-{}.yml'.format(encoded_host))
+                         body=request.data, cassette='post-{}.yml'
+                         .format(generate_cassette_name(url, request)))
         return build_response(resp)
     except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
         raise VCRAssertionError("VCR assertion failed", e)

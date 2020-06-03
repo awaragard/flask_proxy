@@ -74,7 +74,7 @@ def test_ust_proxy(proxy_server, capsys):
     opts['base_url'] = "usermanagement-stage.adobe.io"
     opts['protocol'] = "https"
 
-    p = proxy_server(opts)
+    proxy_server(opts)
 
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("proxy_csv")

@@ -1,12 +1,14 @@
 import logging
-import os
 import threading
 
+import os
 import requests
 import vcr
 import yaml
 from flask import Flask
 from requests import ConnectTimeout
+from urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 from flask_proxy import view, error, config, resources
 
@@ -89,9 +91,6 @@ class ProxyServer(threading.Thread):
 
     def shutdown(self):
         requests.get(self.host + '/shutdown', verify=False)
-        # time.sleep(3)
-        # if self.is_server_running():
-        #     raise RuntimeError("shutdown")
 
     def is_server_running(self):
         try:

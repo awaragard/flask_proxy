@@ -16,7 +16,7 @@ def build_request(request, path):
     headers = dict(request.headers)
     headers['Host'] = target
     url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, path)
-    encoded_host = base64.b64encode(headers['Host'].encode())
+    encoded_host = base64.b64encode(url.encode())
     return url, headers, encoded_host
 
 

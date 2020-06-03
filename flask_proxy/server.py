@@ -88,14 +88,14 @@ class ProxyServer(threading.Thread):
         return self
 
     def shutdown(self):
-        requests.get(self.host + '/shutdown')
+        requests.get(self.host + '/shutdown', verify=False)
         # time.sleep(3)
         # if self.is_server_running():
         #     raise RuntimeError("shutdown")
 
     def is_server_running(self):
         try:
-            requests.get(self.host + '/ping', timeout=2)
+            requests.get(self.host + '/ping', timeout=2, verify=False)
             return True
         except ConnectTimeout:
             return False

@@ -7,3 +7,6 @@ cassette_dir: cassettes
 record_mode: once
 match_on: ['uri', 'method', 'raw_body']
 log_level: DEBUG
+base_url_dict:
+  users: dummy.restapiexample.com
+  users3: dummy.restapiexample.com

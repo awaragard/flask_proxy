@@ -1,5 +1,5 @@
 import urllib.parse
-
+import re
 import requests
 from flask import Blueprint, jsonify, Response, request
 from vcr.errors import CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError
@@ -28,6 +28,10 @@ def generate_cassette_name(url, request):
 # noinspection PyUnresolvedReferences
 def build_request(request):
     target = proxy_server.base_url
+    for k,v in proxy_server.base_url_dict.items():
+        if re.search(k, request.full_path):
+            target = v
+            break
     headers = dict(request.headers)
     headers['Host'] = target
     url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, request.full_path)

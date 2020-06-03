@@ -26,7 +26,8 @@ class ProxyServer(threading.Thread):
                  record_mode=None,
                  match_on=None,
                  vcr_enabled=None,
-                 log_level=None):
+                 log_level=None,
+                 base_url_dict=None):
         super().__init__()
 
         file_opts = {}
@@ -35,6 +36,7 @@ class ProxyServer(threading.Thread):
             logging.getLogger().info("Reading proxy configuration from: {}".format(config_filename))
             with open(config_filename, 'r') as f:
                 file_opts.update(yaml.safe_load(f))
+
 
         self.config_filename = invoc_opts['config_filename'] = config_filename
         self.base_url = invoc_opts['base_url'] = base_url or file_opts.get('base_url')
@@ -80,7 +82,7 @@ class ProxyServer(threading.Thread):
         try:
             self.start_server()
         except RuntimeError:
-            print()
+            pass
 
     def start_sync(self):
         self.start_server()

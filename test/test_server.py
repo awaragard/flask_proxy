@@ -6,6 +6,7 @@ import pytest
 import requests
 from test.resources import get_resource
 from flask_proxy import ProxyServer
+#from python_hosts import Hosts, HostsEntry
 
 global gps
 
@@ -45,6 +46,11 @@ def get_opts(test_name):
 
 def test_simple(proxy_server):
     opts = get_opts(get_name())
+
+    opts['base_url_dict'] = {
+        '/employees': 'dummy.restapiexample.com',
+    }
+
     p = proxy_server(opts)
 
     resp = requests.get(p.host + '/api/v1/employees', headers=test_headers)
@@ -61,6 +67,7 @@ def test_ust_delete(capsys):
         print(result.decode())
 
 def test_ust_simple(capsys):
+
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("simple_csv")
 
@@ -69,13 +76,26 @@ def test_ust_simple(capsys):
     with capsys.disabled():
         print(result.decode())
 
-def test_ust_proxy(proxy_server, capsys):
+def test_ust_proxy(capsys):
     opts = get_opts(get_name())
     opts['base_url'] = "usermanagement-stage.adobe.io"
     opts['protocol'] = "https"
 
-    proxy_server(opts)
+    # opts['base_url_dict'] = {
+    #     '/ims': 'ims-na1-stg1.adobelogin.com',
+    # }
 
+    # auth_opts = opts.copy()
+    # auth_opts['base_url'] = "ims-na1-stg1.adobelogin.com"
+    # auth_opts['port'] = 8084
+
+
+
+  #  auth_svr = ProxyServer(**auth_opts).start_async()
+    um_svr = ProxyServer(**opts).start_async()
+
+ #   s = auth_svr.base_url
+    #os.environ['UMAPI_MOCK'] = 'proxy'
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("proxy_csv")
 

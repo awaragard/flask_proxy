@@ -26,7 +26,9 @@ class ProxyServer(threading.Thread):
                  record_mode=None,
                  match_on=None,
                  vcr_enabled=None,
-                 log_level=None):
+                 log_level=None,
+                 base_url_dict=None,
+                 mock_response_dict=None,):
         super().__init__()
 
         file_opts = {}
@@ -35,6 +37,7 @@ class ProxyServer(threading.Thread):
             logging.getLogger().info("Reading proxy configuration from: {}".format(config_filename))
             with open(config_filename, 'r') as f:
                 file_opts.update(yaml.safe_load(f))
+
 
         self.config_filename = invoc_opts['config_filename'] = config_filename
         self.base_url = invoc_opts['base_url'] = base_url or file_opts.get('base_url')
@@ -45,6 +48,10 @@ class ProxyServer(threading.Thread):
         self.vcr_enabled = invoc_opts['vcr_enabled'] = vcr_enabled or file_opts.get('vcr_enabled', True)
         self.match_on = invoc_opts['match_on'] = match_on or file_opts.get('match_on') or ['uri', 'method', 'raw_body']
         self.log_level = invoc_opts['log_level'] = log_level or file_opts.get('log_level', logging.DEBUG)
+        self.base_url_dict = invoc_opts['base_url_dict'] = base_url_dict or file_opts.get('base_url_dict', {})
+        self.mock_response_dict = invoc_opts['mock_response_dict'] = \
+            mock_response_dict or file_opts.get('mock_response_dict', {})
+
         self.host = invoc_opts['host'] = '{}://localhost:{}'.format(self.protocol, self.port)
         self.daemon = True
         self.invoc_opts = invoc_opts
@@ -80,7 +87,7 @@ class ProxyServer(threading.Thread):
         try:
             self.start_server()
         except RuntimeError:
-            print()
+            pass
 
     def start_sync(self):
         self.start_server()

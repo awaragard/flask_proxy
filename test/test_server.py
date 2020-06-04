@@ -4,9 +4,11 @@ import sys
 import os
 import pytest
 import requests
-from test.resources import get_resource
+
 from flask_proxy import ProxyServer
-#from python_hosts import Hosts, HostsEntry
+from test.resources import get_resource
+
+# from python_hosts import Hosts, HostsEntry
 
 global gps
 
@@ -58,6 +60,7 @@ def test_simple(proxy_server):
     resp = requests.get(p.host + '/api/v1/badurl')
     assert resp.status_code == 417
 
+
 def test_ust_delete(capsys):
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("delete")
@@ -66,8 +69,8 @@ def test_ust_delete(capsys):
     with capsys.disabled():
         print(result.decode())
 
-def test_ust_simple(capsys):
 
+def test_ust_simple(capsys):
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("simple_csv")
 
@@ -76,28 +79,38 @@ def test_ust_simple(capsys):
     with capsys.disabled():
         print(result.decode())
 
-def test_ust_proxy(capsys):
+
+def test_ust_proxy(proxy_server, capsys):
     opts = get_opts(get_name())
     opts['base_url'] = "usermanagement-stage.adobe.io"
     opts['protocol'] = "https"
+    opts['base_url_dict'] = {
+        '/ims/exchange/jwt': 'ims-na1-stg1.adobelogin.com'
+    }
 
-    # opts['base_url_dict'] = {
-    #     '/ims': 'ims-na1-stg1.adobelogin.com',
-    # }
+    opts['mock_response_dict'] = {
+        '/ims/exchange/jwt': {
+            'status_code': 200,
+            'body':{
+                'expires_in': 10000,
+                'access_token': "x"
+            }
+        },
+    }
 
-    # auth_opts = opts.copy()
-    # auth_opts['base_url'] = "ims-na1-stg1.adobelogin.com"
-    # auth_opts['port'] = 8084
-
-
-
-  #  auth_svr = ProxyServer(**auth_opts).start_async()
-    um_svr = ProxyServer(**opts).start_async()
-
- #   s = auth_svr.base_url
-    #os.environ['UMAPI_MOCK'] = 'proxy'
+    proxy_server(opts)
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("proxy_csv")
+
+    # r = requests.post("https://localhost:8083/ims/exchange/jwt", verify=False)
+    #
+    # z = r.json()
+    #
+    # #self.set_expiry(r.json()['expires_in'])
+    #
+    # #return r.json()['access_token']
+
+
 
     os.chdir(test_path)
     result = subprocess.check_output(exe_path)

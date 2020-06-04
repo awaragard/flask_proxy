@@ -1,4 +1,6 @@
+import json
 import urllib.parse
+
 import re
 import requests
 from flask import Blueprint, jsonify, Response, request
@@ -28,14 +30,14 @@ def generate_cassette_name(url, request):
 # noinspection PyUnresolvedReferences
 def build_request(request):
     target = proxy_server.base_url
-    for k,v in proxy_server.base_url_dict.items():
+    for k, v in proxy_server.base_url_dict.items():
         if re.search(k, request.full_path):
             target = v
             break
     headers = dict(request.headers)
     headers['Host'] = target
-    url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, request.full_path)
-    return url, headers
+    url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, request.full_path.lstrip("/"))
+    return url.rstrip('?'), headers
 
 
 def build_response(response):
@@ -61,19 +63,32 @@ def get(path):
 def post(path):
     try:
         url, headers = build_request(request)
-        resp = make_call(url, method='POST', headers=headers,
-                         body=request.data, cassette='post-{}.yml'
-                         .format(generate_cassette_name(url, request)))
+        mock_resp =  get_mock_response(url)
+        if mock_resp is not None:
+            return mock_resp
+
+        body = request.get_data()
+        if 'x-www-form-urlencoded' in request.content_type:
+            body = urllib.parse.urlencode(request.form)
+
+        resp = make_call(url, method='POST', headers=headers, body=body,
+                         cassette='post-{}.yml'.format(generate_cassette_name(url, request)))
         return build_response(resp)
     except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
         raise VCRAssertionError("VCR assertion failed", e)
     except Exception as e:
-        raise ApiError("Unhandled exception occured", e, status_code=500)
+        raise ApiError("Unhandled exception occurred", e, status_code=500)
 
 
 @view.route('/ping', methods=['GET'])
 def ping():
     return jsonify("alive")
+
+## noinspection PyUnresolvedReferences
+def get_mock_response(url):
+    for k, v in proxy_server.mock_response_dict.items():
+        if re.search(k, url):
+            return Response(json.dumps(v['body']), v['status_code'])
 
 
 # noinspection PyUnresolvedReferences

@@ -27,7 +27,8 @@ class ProxyServer(threading.Thread):
                  match_on=None,
                  vcr_enabled=None,
                  log_level=None,
-                 base_url_dict=None):
+                 base_url_dict=None,
+                 mock_response_dict=None,):
         super().__init__()
 
         file_opts = {}
@@ -47,6 +48,10 @@ class ProxyServer(threading.Thread):
         self.vcr_enabled = invoc_opts['vcr_enabled'] = vcr_enabled or file_opts.get('vcr_enabled', True)
         self.match_on = invoc_opts['match_on'] = match_on or file_opts.get('match_on') or ['uri', 'method', 'raw_body']
         self.log_level = invoc_opts['log_level'] = log_level or file_opts.get('log_level', logging.DEBUG)
+        self.base_url_dict = invoc_opts['base_url_dict'] = base_url_dict or file_opts.get('base_url_dict', {})
+        self.mock_response_dict = invoc_opts['mock_response_dict'] = \
+            mock_response_dict or file_opts.get('mock_response_dict', {})
+
         self.host = invoc_opts['host'] = '{}://localhost:{}'.format(self.protocol, self.port)
         self.daemon = True
         self.invoc_opts = invoc_opts

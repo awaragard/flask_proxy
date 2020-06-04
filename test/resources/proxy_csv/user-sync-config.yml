@@ -271,7 +271,7 @@ logging:
   # in order of decreasing detail (that is, debug produces the most information,
   # while critical produces the least information, suppressing even reports
   # of non-fatal errors in operations.)
-  file_log_level: info
+  file_log_level: debug
 
   # (optional) console_log_level (default value "info")
   # This determines the detail level of the information logged to standard output.

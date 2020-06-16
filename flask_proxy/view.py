@@ -12,10 +12,19 @@ view = Blueprint('view', __name__, url_prefix='')
 logger = None
 proxy_server = None
 
+#reduce function to shorten cassette name
+def reduce_str_func(name):
+    new_name = ""
+    for i in range(len(name)):
+        if i%2 == 0:
+            new_name = new_name + name[i]
+    return new_name
 
 # noinspection PyUnresolvedReferences
 def generate_cassette_name(url, request):
-    name = urllib.parse.quote_plus(proxy_server.base_url + request.full_path)
+    name = (proxy_server.base_url + request.full_path).replace("/", "")
+    name = reduce_str_func(name)
+    name = urllib.parse.quote_plus(name)
     try:
         data = request.data.decode()
         if data:
@@ -50,6 +59,10 @@ def build_response(response):
 def get(path):
     try:
         url, headers = build_request(request)
+        mock_resp =  get_mock_response(url)
+        if mock_resp is not None:
+            return mock_resp.to_flask_response()
+
         resp = make_call(url, headers=headers, cassette='get-{}.yml'
                          .format(generate_cassette_name(url, request)))
         return build_response(resp)
@@ -88,7 +101,7 @@ def ping():
 def get_mock_response(url):
     for k, v in proxy_server.mock_response_dict.items():
         if re.search(k, url):
-            return Response(json.dumps(v['body']), v['status_code'])
+            return v.to_flask_response()
 
 
 # noinspection PyUnresolvedReferences

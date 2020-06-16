@@ -22,7 +22,8 @@
 
 server:
   host: localhost:8083
-  ims_host: ims-na1-stg1.adobelogin.com
+  ims_host: localhost:8083
+  #ims-na1-stg1.adobelogin.com
   #ims_endpoint_jwt: /ims/exchange/jwt
   #timeout: 120
   #retries: 3

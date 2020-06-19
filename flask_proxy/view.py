@@ -1,12 +1,10 @@
 import urllib.parse
 
-import re
 import requests
 from flask import Blueprint, jsonify, Response, request
 from vcr.errors import CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError
 
 from flask_proxy.error import ApiError, VCRAssertionError
-from flask_proxy.mock_response import MockResponse
 from flask_proxy.modes import VCRMode
 
 view = Blueprint('view', __name__, url_prefix='')
@@ -76,19 +74,10 @@ def reduce_str_func(name):
     return new_name
 
 
-## noinspection PyUnresolvedReferences
-def get_mock_response(url):
-    for k, v in proxy_server.mock_response_dict.items():
-        if re.search(k, url):
-            if not isinstance(v, MockResponse):
-                raise ValueError("Mock response for '{}' should be of type MockResponse.  "
-                                 "Instead, got '{}'".format(k, type(v)))
-            return v.to_flask_response()
-
-
 # noinspection PyUnresolvedReferences
 def cassette_from(url, request):
-    name = (proxy_server.base_url + request.full_path).replace("/", "")
+    target = proxy_server.get_base_url(request.full_path)
+    name = (target + request.full_path).replace("/", "")
     name = urllib.parse.quote_plus(reduce_str_func(name))
     try:
         data = request.data.decode()
@@ -103,16 +92,11 @@ def cassette_from(url, request):
 
 # noinspection PyUnresolvedReferences
 def build_request(request):
-    target = proxy_server.base_url
-    for k, v in proxy_server.base_url_dict.items():
-        if re.search(k, request.full_path):
-            target = v
-            break
+    target = proxy_server.get_base_url(request.full_path)
     headers = dict(request.headers)
     headers['Host'] = target
     url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, request.full_path.lstrip("/"))
-    mock_response = get_mock_response(url) if proxy_server.mode == VCRMode.playback else None
-
+    mock_response = proxy_server.get_mock_response(url) if proxy_server.mode == VCRMode.playback else None
     return url.rstrip('?'), headers, mock_response
 
 

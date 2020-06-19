@@ -16,7 +16,7 @@ def main():
               default=get_resource('default_config.yml'),
               type=click.Path(exists=True))
 def run(config_filename):
-    ProxyServer(config_filename=config_filename).start_sync()
+    ProxyServer().from_file(config_filename).start_sync()
 
 
 if __name__ == '__main__':

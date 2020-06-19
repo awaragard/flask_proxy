@@ -17,23 +17,3 @@ class MockResponse:
             self.headers
         )
 
-
-
-# p1 = MockResponse('/ims/exchange/jwt', body={
-#             'expires_in': 10000,
-#             'access_token': "x"
-#         })
-
-
-
-
-#
-# opts['mock_response_dict'] = {
-#                                  '/ims/exchange/jwt': ""{
-#         'status_code': 200,
-#         'body': {
-#             'expires_in': 10000,
-#             'access_token': "x"
-#         }
-#     },
-# }

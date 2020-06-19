@@ -5,7 +5,7 @@ import os
 import pytest
 import requests
 from flask_proxy.mock_response import MockResponse
-from flask_proxy import ProxyServer
+from flask_proxy import ProxyServer, VCRMode
 from test.resources import get_resource
 
 # from python_hosts import Hosts, HostsEntry
@@ -18,8 +18,7 @@ test_opts = {
     'protocol': 'http',
     'port': 8083,
     'cassette_dir': None,
-    'record_mode': 'once',
-    'vcr_enabled': True,
+    'record_mode': 'record',
     'log_level': 'INFO',
     'mock_response_dict': {}
 }
@@ -95,6 +94,9 @@ def test_ust_proxy(proxy_server, capsys):
     opts['mock_response_dict'][m.rpath] = m
 
     p = proxy_server(opts)
+
+    p.set_mode(VCRMode.playback)
+
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("proxy_csv")
 
@@ -104,6 +106,7 @@ def test_ust_proxy(proxy_server, capsys):
     result = subprocess.check_output(exe_path)
     with capsys.disabled():
         print(result.decode())
+
 
 
 # def test_mock_response(capsys):

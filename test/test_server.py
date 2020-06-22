@@ -3,29 +3,31 @@ import sys
 
 import os
 import pytest
-import requests
-from flask_proxy.mock_response import MockResponse
-from flask_proxy import ProxyServer
-from test.resources import get_resource
 
-# from python_hosts import Hosts, HostsEntry
+from flask_proxy import ProxyServer, VCRMode
+from flask_proxy.mock_response import MockResponse
+from test.resources import get_resource
 
 global gps
 
 test_headers = {'User-Agent': 'none'}
+
+mock_auth = MockResponse(
+    method='POST',
+    endpoint='/ims/exchange/jwt',
+    body={
+        'expires_in': 10000,
+        'access_token': "x"
+    })
+
 test_opts = {
-    'base_url': 'dummy.restapiexample.com',
-    'protocol': 'http',
-    'port': 8083,
-    'cassette_dir': None,
-    'record_mode': 'once',
-    'vcr_enabled': True,
-    'log_level': 'INFO',
-    'mock_response_dict': {}
+    'base_urls': 'usermanagement-stage.adobe.io',
+    'protocol': 'https',
+    'mode': VCRMode.record,
+    'mock_responses': {mock_auth.endpoint: mock_auth}
 }
 
 
-# noinspection PyUnboundLocalVariable
 @pytest.fixture()
 def proxy_server():
     def _proxy_server(opts):
@@ -47,19 +49,14 @@ def get_opts(test_name):
     return opts
 
 
-def test_simple(proxy_server):
-    opts = get_opts(get_name())
-
-    opts['base_url_dict'] = {
-        '/employees': 'dummy.restapiexample.com',
-    }
-
-    p = proxy_server(opts)
-
-    resp = requests.get(p.host + '/api/v1/employees', headers=test_headers)
-    assert resp.status_code == 200
-    resp = requests.get(p.host + '/api/v1/badurl')
-    assert resp.status_code == 417
+# def test_simple(proxy_server):
+#     opts = get_opts(get_name())
+#     p = proxy_server(opts)
+#
+#     resp = requests.get(p.host + '/api/v1/employees', headers=test_headers)
+#     assert resp.status_code == 200
+#     resp = requests.get(p.host + '/api/v1/badurl')
+#     assert resp.status_code == 417
 
 
 def test_ust_delete(capsys):
@@ -71,43 +68,14 @@ def test_ust_delete(capsys):
         print(result.decode())
 
 
-def test_ust_simple(capsys):
-    exe_path = get_resource("user-sync.exe")
-    test_path = get_resource("simple_csv")
-
-    os.chdir(test_path)
-    result = subprocess.check_output(exe_path)
-    with capsys.disabled():
-        print(result.decode())
-
-
 def test_ust_proxy(proxy_server, capsys):
     opts = get_opts(get_name())
-    opts['base_url'] = "usermanagement-stage.adobe.io"
-    opts['protocol'] = "https"
-    opts['base_url_dict'] = {
-        '/ims/exchange/jwt': 'ims-na1-stg1.adobelogin.com'
-    }
-    m = MockResponse('/ims/exchange/jwt', body={
-        'expires_in': 10000,
-        'access_token': "x"
-    })
-    opts['mock_response_dict'][m.rpath] = m
 
-    p = proxy_server(opts)
+    proxy_server(opts)
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("proxy_csv")
 
-    # r = requests.post(p.host + '/ims/exchange/jwt')
-    # x = r.json()
     os.chdir(test_path)
     result = subprocess.check_output(exe_path)
     with capsys.disabled():
         print(result.decode())
-
-
-# def test_mock_response(capsys):
-#     p1 = MockResponse('/ims/exchange/jwt')
-#     with capsys.disabled():
-#         print(p1.mock_response())
-

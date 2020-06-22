@@ -8,71 +8,93 @@ import yaml
 from flask import Flask
 from requests import ConnectTimeout
 from urllib3.exceptions import InsecureRequestWarning
-requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 from flask_proxy import view, error, config, resources
+from flask_proxy.mock_response import MockResponse
+from flask_proxy.modes import VCRMode
 
 config.init_logger(resources.get_resource('logging_config.yml'))
+requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 
 
 class ProxyServer(threading.Thread):
 
     def __init__(self,
-                 config_filename=None,
-                 base_url=None,
+                 base_urls=None,
                  protocol=None,
-                 port=None,
-                 cassette_dir=None,
-                 record_mode=None,
+                 port=8083,
+                 cassette_dir='cassettes',
+                 mode=VCRMode.record,
                  match_on=None,
-                 vcr_enabled=None,
-                 log_level=None,
-                 base_url_dict=None,
-                 mock_response_dict=None,):
+                 log_level=logging.DEBUG,
+                 mock_responses=None,
+                 **kwargs
+                 ):
+
         super().__init__()
+        logging.getLogger().setLevel(log_level or logging.DEBUG)
 
-        file_opts = {}
-        invoc_opts = {}
-        if config_filename:
-            logging.getLogger().info("Reading proxy configuration from: {}".format(config_filename))
-            with open(config_filename, 'r') as f:
-                file_opts.update(yaml.safe_load(f))
+        # base_urls is a mapping of endpoints to domains.  Default will be the fallback always
+        # If we get a string, this becomes the default.  If we get a collection, we use that instead
+        base_urls = base_urls or {}
+        self.base_urls = {}
+        if isinstance(base_urls, str):
+            self.add_base_url('default', base_urls)
+        else:
+            self.base_urls.update(base_urls)
 
-
-        self.config_filename = invoc_opts['config_filename'] = config_filename
-        self.base_url = invoc_opts['base_url'] = base_url or file_opts.get('base_url')
-        self.protocol = invoc_opts['protocol'] = protocol or file_opts.get('protocol', 'https')
-        self.port = invoc_opts['port'] = port or file_opts.get('port', 8080)
-        self.record_mode = invoc_opts['record_mode'] = record_mode or file_opts.get('record_mode', 'once')
-        self.cassette_dir = invoc_opts['cassette_dir'] = cassette_dir or file_opts.get('cassette_dir', 'cassettes')
-        self.vcr_enabled = invoc_opts['vcr_enabled'] = vcr_enabled or file_opts.get('vcr_enabled', True)
-        self.match_on = invoc_opts['match_on'] = match_on or file_opts.get('match_on') or ['uri', 'method', 'raw_body']
-        self.log_level = invoc_opts['log_level'] = log_level or file_opts.get('log_level', logging.DEBUG)
-        self.base_url_dict = invoc_opts['base_url_dict'] = base_url_dict or file_opts.get('base_url_dict', {})
-        self.mock_response_dict = invoc_opts['mock_response_dict'] = \
-            mock_response_dict or file_opts.get('mock_response_dict', {})
-
-        self.host = invoc_opts['host'] = '{}://localhost:{}'.format(self.protocol, self.port)
-        self.daemon = True
-        self.invoc_opts = invoc_opts
+        self.port = port
+        self.mode = mode if isinstance(mode, VCRMode) else VCRMode.value_of(mode)
+        self.protocol = protocol
+        self.mock_responses = mock_responses or {}
+        self.host = '{}://localhost:{}'.format(self.protocol, self.port)
+        self.options = {k: v for k, v in vars(self).items() if not k.startswith("_")}
+        self.logger = view.logger = logging.getLogger("proxy")
+        self.logger.info("Initializing with options: {}".format(self.options))
 
         self.vcr = vcr.VCR(
-            record_mode=self.record_mode,
-            cassette_library_dir=self.cassette_dir,
-            match_on=self.match_on,
+            record_mode=self.mode.value,
+            cassette_library_dir=cassette_dir,
+            match_on=match_on or ['uri', 'method', 'raw_body'],
             decode_compressed_response=True
         )
 
-        logging.getLogger().setLevel(self.log_level)
-        self.logger = view.logger = logging.getLogger("proxy")
-        self.logger.info("Initialized with options: {}".format(invoc_opts))
+
+        # Configure app and views
         view.proxy_server = self
         error.register(view)
-
+        self.daemon = True
         self.application = Flask(self.name)
         self.application.url_map.strict_slashes = False
         self.application.config.update(os.environ)
         self.application.register_blueprint(view.view)
+
+    def add_base_url(self, endpoint, url):
+        self.base_urls[endpoint] = url
+
+    def add_mock_response(self, endpoint, response):
+        self.mock_responses[endpoint] = response
+
+    def get_base_url(self, endpoint=None):
+        if endpoint:
+            for k, v in self.base_urls.items():
+                if endpoint.startswith(k):
+                    return v
+        return self.base_urls['default']
+
+    def get_mock_response(self, endpoint):
+        for k, v in self.mock_responses.items():
+            if endpoint.startswith(k):
+                if not isinstance(v, MockResponse):
+                    raise ValueError("Mock response for '{}' should be of type MockResponse.  "
+                                     "Instead, got '{}'".format(k, type(v)))
+                return v.to_flask_response()
+
+    def set_mode(self, mode):
+        if not isinstance(mode, VCRMode):
+            raise ValueError("Invalid mode: {}.  Please use VCRMode enum.".format(mode))
+        self.mode = mode
+        self.vcr.record_mode = mode.value
 
     def start_server(self):
         self.logger.info("Starting server")
@@ -82,6 +104,12 @@ class ProxyServer(threading.Thread):
             use_reloader=False,
             ssl_context='adhoc' if self.protocol == "https" else None
         )
+
+    @classmethod
+    def from_file(cls, config_filename):
+        with open(config_filename, 'r') as f:
+            options = (yaml.safe_load(f))
+            return ProxyServer(**options)
 
     def run(self):
         try:

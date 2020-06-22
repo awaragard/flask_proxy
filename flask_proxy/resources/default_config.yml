@@ -1,9 +1,9 @@
 
-port: 8088
-base_url: dummy.restapiexample.com
-protocol: http
+port: 8083
+base_url: usermanagement-stage.adobe.io
+protocol: https
 vcr_enabled: true
 cassette_dir: cassettes
-record_mode: once
+mode: record
 match_on: ['uri', 'method', 'raw_body']
 log_level: DEBUG

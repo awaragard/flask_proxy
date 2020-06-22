@@ -6,11 +6,11 @@ from traceback import TracebackException
 from flask import jsonify
 from werkzeug.exceptions import NotFound
 
+
 class ApiError(Exception):
-    status_code = 400
     __name__ = "ApiError"
 
-    def __init__(self, message=None, error=None, status_code=None, chain=None, payload=None):
+    def __init__(self, message=None, error=None, status_code=400, chain=None, payload=None):
         Exception.__init__(self)
         if isinstance(error, Exception):
             self.error_msg = str(error)
@@ -55,8 +55,21 @@ class ApiError(Exception):
         return rv
 
 
-class VCRAssertionError(ApiError):
-    pass
+class VCRAssertionError(Exception):
+    __name__ = "VCRAssertionError"
+
+    def __init__(self):
+        Exception.__init__(self)
+        self.args = self.message = ("VCR assertion failed",)
+        self.status_code = 417
+        self.timestamp = datetime.now()
+
+    def serialize(self):
+        rv = {}
+        rv['status_code'] = str(self.status_code)
+        rv['message'] = self.message
+        rv['timestamp'] = self.timestamp.strftime('%Y/%m/%d %H:%M:%S')
+        return rv
 
 
 def parse_exception(exc, extra_msg=''):

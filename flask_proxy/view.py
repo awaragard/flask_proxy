@@ -22,8 +22,8 @@ def get(path):
                          headers=headers,
                          cassette='get-{}.yml'.format(cassette_from(url, request)))
         return build_response(resp)
-    except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
-        raise VCRAssertionError("VCR assertion failed", e, status_code=417)
+    except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError):
+        raise VCRAssertionError()
     except Exception as e:
         raise ApiError("Unhandled exception occured", e, status_code=500)
 
@@ -40,8 +40,8 @@ def post(path):
                          body=get_request_body(request),
                          cassette='post-{}.yml'.format(cassette_from(url, request)))
         return build_response(resp)
-    except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError) as e:
-        raise VCRAssertionError("VCR assertion failed", e)
+    except (CannotOverwriteExistingCassetteException, UnhandledHTTPRequestError):
+        raise VCRAssertionError()
     except Exception as e:
         raise ApiError("Unhandled exception occurred", e, status_code=500)
 
@@ -96,7 +96,7 @@ def build_request(request):
     headers = dict(request.headers)
     headers['Host'] = target
     url = '{0}://{1}/{2}'.format(proxy_server.protocol, target, request.full_path.lstrip("/"))
-    mock_response = proxy_server.get_mock_response(url) if proxy_server.mode == VCRMode.playback else None
+    mock_response = proxy_server.get_mock_response(request.full_path) if proxy_server.mode == VCRMode.playback else None
     return url.rstrip('?'), headers, mock_response
 
 

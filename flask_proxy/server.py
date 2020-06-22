@@ -44,7 +44,7 @@ class ProxyServer(threading.Thread):
             self.base_urls.update(base_urls)
 
         self.port = port
-        self.mode = mode
+        self.mode = mode if isinstance(mode, VCRMode) else VCRMode.value_of(mode)
         self.protocol = protocol
         self.mock_responses = mock_responses or {}
         self.host = '{}://localhost:{}'.format(self.protocol, self.port)
@@ -58,6 +58,7 @@ class ProxyServer(threading.Thread):
             match_on=match_on or ['uri', 'method', 'raw_body'],
             decode_compressed_response=True
         )
+
 
         # Configure app and views
         view.proxy_server = self

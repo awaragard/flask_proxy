@@ -3,7 +3,6 @@ import sys
 
 import os
 import pytest
-import requests
 
 from flask_proxy import ProxyServer, VCRMode
 from flask_proxy.mock_response import MockResponse
@@ -14,6 +13,7 @@ global gps
 test_headers = {'User-Agent': 'none'}
 
 mock_auth = MockResponse(
+    method='POST',
     endpoint='/ims/exchange/jwt',
     body={
         'expires_in': 10000,
@@ -23,7 +23,7 @@ mock_auth = MockResponse(
 test_opts = {
     'base_urls': 'usermanagement-stage.adobe.io',
     'protocol': 'https',
-    'record_mode': 'record',
+    'mode': VCRMode.record,
     'mock_responses': {mock_auth.endpoint: mock_auth}
 }
 
@@ -70,8 +70,8 @@ def test_ust_delete(capsys):
 
 def test_ust_proxy(proxy_server, capsys):
     opts = get_opts(get_name())
-    p = proxy_server(opts)
 
+    proxy_server(opts)
     exe_path = get_resource("user-sync.exe")
     test_path = get_resource("proxy_csv")
 

@@ -1,0 +1,7 @@
+
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+assertions: |-
+
+

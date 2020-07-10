@@ -6,4 +6,4 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  removing mapped groups from adobe-only user: federatedid,callsaul40@usersynctest.com
+  removing mapped groups from adobe-only user: federatedid,callsaul4@usersynctest.com

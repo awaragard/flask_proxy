@@ -54,7 +54,7 @@ class ProxyServer(threading.Thread):
 
         self.vcr = vcr.VCR(
             record_mode=self.mode.value,
-            cassette_library_dir=cassette_dir,
+            cassette_library_dir=os.path.abspath(cassette_dir),
             match_on=match_on or ['uri', 'method', 'raw_body'],
             decode_compressed_response=True
         )

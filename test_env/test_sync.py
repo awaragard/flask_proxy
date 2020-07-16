@@ -37,6 +37,7 @@ class TestSync():
             self.sync_args = cfg.get('sync_args', '')
             self.assertions = cfg.get('assertions', '').splitlines()
             self.root_config = cfg.get('root_config', 'user-sync-config.yml')
+            self.fail_on_error = bool(cfg.get('fail_on_error', True))
             self.allowed_errors = cfg.get('allowed_errors') or []
             self.allowed_errors.extend(default_skipped_errors)
 
@@ -62,15 +63,19 @@ class TestSync():
         Check first for actual sync errors, and then verify that our asserted lines are present in sync.
         :return:
         """
-        for i, l in enumerate(self.sync_results):
-            if re.search('(ERROR)|(CRITICAL)|(EXCEPTION)|(WARNING)', l, flags=re.IGNORECASE):
-                if not True in {self.normalize(s) in self.normalize(l) for s in self.allowed_errors}:
-                    fail(l)
 
-        fulltext = "".join(self.sync_results).lower()
-        for a in self.assertions:
-            if self.normalize(a) not in fulltext:
-                fail(a + ": not in results")
+        for i, l in enumerate(self.sync_results):
+            for a in self.assertions:
+                if self.normalize(a) in l:
+                    self.assertions.remove(a)
+
+            if self.fail_on_error:
+                if re.search('(ERROR)|(CRITICAL)|(EXCEPTION)|(WARNING)', l, flags=re.IGNORECASE):
+                    if not True in {self.normalize(s) in self.normalize(l) for s in self.allowed_errors}:
+                        fail(l)
+
+        if self.assertions:
+            fail("Assertions not found in results: {}".format(self.assertions))
 
     def log_start(self):
         self.logger.info(

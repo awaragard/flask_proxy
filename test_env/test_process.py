@@ -2,49 +2,40 @@ import logging
 import sys
 
 import os
-import pytest
 
-from flask_proxy import VCRMode, ProxyServer
-from flask_proxy.mock_response import MockResponse
+from flask_proxy import VCRMode
 from test_env import init_logger
+from test_env.conftest import start_proxy
 from test_env.test_sync import TestSync
 
 init_logger(logging.DEBUG)
 logger = logging.getLogger()
-
 root_dir = os.getcwd()
 
-record_mode = False
+record_mode = True
 check_results = True
 
-test_headers = {'User-Agent': 'none'}
-
-
-
-@pytest.fixture
-def meta():
-    yield
-    os.chdir(root_dir)
+#prox = start_proxy(VCRMode.record if record_mode else VCRMode.playback)
 
 
 def run(name, dir):
-    test = TestSync(name, dir)
-    test.run_sync()
+    try:
+        test = TestSync(name, dir)
+        #prox.set_cassette_dir(test.source_dir)
 
-    if check_results and not record_mode:
-        test.validate_results()
+        test.run_sync()
+
+        if check_results and not record_mode:
+            test.validate_results()
+    finally:
+        os.chdir(root_dir)
+
+
+def get_name():
+    return sys._getframe(1).f_code.co_name
 
 
 class TestUST(object):
 
-    def test_all_users(self, meta, tmpdir, start_proxy):
-
-        prox = start_proxy(get_name(), VCRMode.record)
-
+    def test_all_users(self, tmpdir):
         run(get_name(), tmpdir)
-
-    def test_all_users2(self, meta, tmpdir):
-        run(get_name(), tmpdir)
-
-def get_name():
-    return sys._getframe(1).f_code.co_name

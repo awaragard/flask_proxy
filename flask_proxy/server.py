@@ -69,6 +69,10 @@ class ProxyServer(threading.Thread):
         self.application.config.update(os.environ)
         self.application.register_blueprint(view.view)
 
+    def set_cassette_dir(self, path):
+        self.vcr.cassette_library_dir = \
+            os.path.abspath(path + os.sep + "cassettes")
+
     def add_base_url(self, endpoint, url):
         self.base_urls[endpoint] = url
 

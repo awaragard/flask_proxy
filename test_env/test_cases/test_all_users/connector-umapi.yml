@@ -21,8 +21,8 @@
 # so that the default values are guaranteed to be used.
 
 server:
-  #host: usermanagement-stage.adobe.io
-  host: localhost:8083
+  host: usermanagement-stage.adobe.io
+  #host: localhost:8083
   ims_host: ims-na1-stg1.adobelogin.com
   #ims_endpoint_jwt: /ims/exchange/jwt
   #timeout: 120

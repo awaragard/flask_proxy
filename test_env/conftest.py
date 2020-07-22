@@ -18,17 +18,9 @@ test_opts = {
     'mock_responses': {mock_auth.endpoint: mock_auth}
 }
 
-@pytest.fixture()
-def start_proxy():
-    def _start_proxy(test_name, record_mode):
-        opts = test_opts.copy()
-        opts['cassette_dir'] = 'cassettes/' + str(test_name)
-        opts['mode'] = record_mode
-
-        global gps
-        gps = ProxyServer(**opts).start_async()
-        return gps
-
-    yield _start_proxy
-    gps.shutdown()
-
+def start_proxy(record_mode):
+    opts = test_opts.copy()
+    opts['cassette_dir'] = 'cassettes/default'
+    opts['mode'] = record_mode
+    gps = ProxyServer(**opts).start_async()
+    return gps

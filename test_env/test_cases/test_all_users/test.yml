@@ -1,0 +1,10 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  removing mapped groups from adobe-only user: federatedid,callsaul4@usersynctest.com
+

@@ -23,7 +23,7 @@ var/
 venv/
 wheels/
 cassettes/
-
+results/
 *.egg-info/
 .installed.cfg
 *.egg

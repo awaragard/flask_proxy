@@ -39,3 +39,6 @@ class TestUST(object):
 
     def test_all_users(self, tmpdir):
         run(get_name(), tmpdir)
+
+    def test_update_name(self, tmpdir):
+        run(get_name(), tmpdir)

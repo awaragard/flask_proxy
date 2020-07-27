@@ -37,5 +37,38 @@ def get_name():
 
 class TestUST(object):
 
-    def test_all_users(self, tmpdir):
+    def test_create_all_users(self, tmpdir):
         run(get_name(), tmpdir)
+
+    def test_create_mapped_users(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_update_fname(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_update_lname(self,tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_update_email(self,tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_update_group(self,tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_remove(self,tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_delete(self,tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_exclude(self,tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_remove_adobe_groups(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_write_file(self, tmpdir):
+        run(get_name(), tmpdir)
+
+
+

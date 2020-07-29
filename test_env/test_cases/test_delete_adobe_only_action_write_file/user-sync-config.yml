@@ -311,7 +311,7 @@ logging:
 # (rather than the directory containing the configuration file).
 invocation_defaults:
   # For argument --adobe-only-user-action, the default is 'preserve'.
-  adobe_only_user_action: preserve
+  adobe_only_user_action: write-file
   # For argument --adobe-only-user-list, the default is empty (no value).
   adobe_only_user_list:
   # For argument --adobe-users, the default is 'all'.
@@ -340,7 +340,7 @@ invocation_defaults:
   # For argument --update-user-info, the default is False (don't update).
   # If you set this default to True, you can supply the argument
   # --no-update-user-info to override the default.
-  update_user_info: No
+  update_user_info: Yes
   # For argument --user-filter, the default is empty (no value).
   # Because regular expression notation uses special characters,
   # any default you set should almost certainly be single-quoted.

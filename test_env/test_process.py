@@ -70,5 +70,9 @@ class TestUST(object):
     def test_delete_adobe_only_action_write_file(self, tmpdir):
         run(get_name(), tmpdir)
 
+    def test_max_adobe_only_users(self,tmpdir):
+        run(get_name(), tmpdir)
 
+    def test_stray_list_adobe_only_action_delete(self,tmpdir):
+        run(get_name(), tmpdir)
 

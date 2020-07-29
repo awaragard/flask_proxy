@@ -1,0 +1,10 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  critical processor - unable to process adobe-only users, as their count (6) is larger than the max_adobe_only_users setting (5)
+

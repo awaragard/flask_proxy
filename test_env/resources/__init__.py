@@ -9,5 +9,5 @@ def get_resource(name):
     return join(resource_dir, name)
 
 def get_ust_exe():
-    binary = "user-sync.exe" if 'win' in sys.platform.lower() else "user-sync"
+    binary = "user-sync-bugfix.exe" if 'win' in sys.platform.lower() else "user-sync"
     return join(resource_dir, binary)

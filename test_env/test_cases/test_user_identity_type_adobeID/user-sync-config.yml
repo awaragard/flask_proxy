@@ -83,7 +83,7 @@ directory_users:
   # If your directory does not specify the Adobe-side identity type
   # for one (or any) of your users, you can specify a default type here that
   # will be used: one of "adobeID", "enterpriseID", or "federatedID".
-  user_identity_type: federatedID
+  user_identity_type: adobeID
 
   # (optional) default_country_code (no default value)
   # All Adobe users have a country code, which is a two-letter (ISO-3166) country code
@@ -332,7 +332,7 @@ invocation_defaults:
   # If you set this default to True, UST will automatically skip user creation
   # on user that is not part of any mapped group.
   # --include-unmapped-users to override the default.
-  exclude_unmapped_users: Yes
+  exclude_unmapped_users: No
   # For argument --process-groups, the default is False (don't process).
   # If you set this default to True, you can supply the argument
   # --no-process-groups to override the default.

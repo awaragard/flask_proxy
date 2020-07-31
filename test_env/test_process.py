@@ -43,6 +43,12 @@ class TestUST(object):
     def test_create_mapped_users(self, tmpdir):
         run(get_name(), tmpdir)
 
+    def test_create_by_push_strategy(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_private_key_decryption(self, tmpdir):
+        run(get_name(), tmpdir)
+
     def test_update_fname(self, tmpdir):
         run(get_name(), tmpdir)
 
@@ -58,6 +64,9 @@ class TestUST(object):
     def test_delete_adobe_only_action_remove(self,tmpdir):
         run(get_name(), tmpdir)
 
+    def test_delete_adobe_only_action_remove_with_max_limit(self,tmpdir):
+        run(get_name(), tmpdir)
+
     def test_delete_adobe_only_action_delete(self,tmpdir):
         run(get_name(), tmpdir)
 
@@ -69,6 +78,31 @@ class TestUST(object):
 
     def test_delete_adobe_only_action_write_file(self, tmpdir):
         run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_stray_list(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_adobe_only_action_stray_list_with_max_limit(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_exclude_adobe_groups(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_exclude_adobe_users(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_delete_exclude_identity_types(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_default_country_code(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_user_identity_type_enterpriseID(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_user_identity_type_adobeID(self, tmpdir):
+        run(get_name(), tmpdir)
+
 
 
 

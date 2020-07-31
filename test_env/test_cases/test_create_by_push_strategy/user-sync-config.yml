@@ -332,13 +332,13 @@ invocation_defaults:
   # If you set this default to True, UST will automatically skip user creation
   # on user that is not part of any mapped group.
   # --include-unmapped-users to override the default.
-  exclude_unmapped_users: Yes
+  exclude_unmapped_users: No
   # For argument --process-groups, the default is False (don't process).
   # If you set this default to True, you can supply the argument
   # --no-process-groups to override the default.
   process_groups: Yes
   # For argument --strategy, the default is 'sync'.
-  strategy: sync
+  strategy: push
   # For argument --test-mode (or -t), the default is False (live run).
   # if you set this default to True, you can supply the argument
   # --no-test-mode (or -T) to override the default.

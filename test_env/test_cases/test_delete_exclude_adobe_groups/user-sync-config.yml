@@ -36,7 +36,7 @@ adobe_users:
   # Any user in one or more of the named Adobe groups is excluded from
   # updates by User Sync.
   exclude_adobe_groups:
-    #- "Sample Product Profile"
+    - "Test Group 1"
     #- "Sample User Group"
 
   # (optional) exclude_users (no default value)
@@ -163,12 +163,6 @@ directory_users:
     - directory_group: "Test Group 1"
       adobe_groups:
         - "Test Group 1"
-    - directory_group: "Test Group 2"
-      adobe_groups:
-        - "Test Group 2"
-    - directory_group: "Test Group 5"
-      adobe_groups:
-        - "Test Group 5"
 
   # (optional) additional_groups (no default value)
   # People who use their directory groups for ACLs on the Adobe side
@@ -277,12 +271,12 @@ logging:
   # in order of decreasing detail (that is, debug produces the most information,
   # while critical produces the least information, suppressing even reports
   # of non-fatal errors in operations.)
-  file_log_level: info
+  file_log_level: debug
 
   # (optional) console_log_level (default value "info")
   # This determines the detail level of the information logged to standard output.
   # See the description of file_log_level for details of the allowed values.
-  console_log_level: info
+  console_log_level: debug
 
 # The invocation_defaults section controls the default values used
 # for command-line arguments.  (Of course, these cannot be used to
@@ -317,7 +311,7 @@ logging:
 # (rather than the directory containing the configuration file).
 invocation_defaults:
   # For argument --adobe-only-user-action, the default is 'preserve'.
-  adobe_only_user_action: preserve
+  adobe_only_user_action: delete
   # For argument --adobe-only-user-list, the default is empty (no value).
   adobe_only_user_list:
   # For argument --adobe-users, the default is 'all'.
@@ -332,7 +326,7 @@ invocation_defaults:
   # If you set this default to True, UST will automatically skip user creation
   # on user that is not part of any mapped group.
   # --include-unmapped-users to override the default.
-  exclude_unmapped_users: Yes
+  exclude_unmapped_users: No
   # For argument --process-groups, the default is False (don't process).
   # If you set this default to True, you can supply the argument
   # --no-process-groups to override the default.
@@ -346,7 +340,7 @@ invocation_defaults:
   # For argument --update-user-info, the default is False (don't update).
   # If you set this default to True, you can supply the argument
   # --no-update-user-info to override the default.
-  update_user_info: No
+  update_user_info: Yes
   # For argument --user-filter, the default is empty (no value).
   # Because regular expression notation uses special characters,
   # any default you set should almost certainly be single-quoted.

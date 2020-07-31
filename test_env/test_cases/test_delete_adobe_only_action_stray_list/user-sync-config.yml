@@ -163,12 +163,6 @@ directory_users:
     - directory_group: "Test Group 1"
       adobe_groups:
         - "Test Group 1"
-    - directory_group: "Test Group 2"
-      adobe_groups:
-        - "Test Group 2"
-    - directory_group: "Test Group 5"
-      adobe_groups:
-        - "Test Group 5"
 
   # (optional) additional_groups (no default value)
   # People who use their directory groups for ACLs on the Adobe side
@@ -317,9 +311,9 @@ logging:
 # (rather than the directory containing the configuration file).
 invocation_defaults:
   # For argument --adobe-only-user-action, the default is 'preserve'.
-  adobe_only_user_action: preserve
+  adobe_only_user_action: delete
   # For argument --adobe-only-user-list, the default is empty (no value).
-  adobe_only_user_list:
+  adobe_only_user_list: remove-list.csv
   # For argument --adobe-users, the default is 'all'.
   # if you want to specify group manually. Valid value format is
   # ['group', 'groupA,groupB']
@@ -332,7 +326,7 @@ invocation_defaults:
   # If you set this default to True, UST will automatically skip user creation
   # on user that is not part of any mapped group.
   # --include-unmapped-users to override the default.
-  exclude_unmapped_users: Yes
+  exclude_unmapped_users: No
   # For argument --process-groups, the default is False (don't process).
   # If you set this default to True, you can supply the argument
   # --no-process-groups to override the default.
@@ -346,7 +340,7 @@ invocation_defaults:
   # For argument --update-user-info, the default is False (don't update).
   # If you set this default to True, you can supply the argument
   # --no-update-user-info to override the default.
-  update_user_info: No
+  update_user_info: Yes
   # For argument --user-filter, the default is empty (no value).
   # Because regular expression notation uses special characters,
   # any default you set should almost certainly be single-quoted.

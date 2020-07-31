@@ -1,0 +1,17 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  excluding adobe user (due to type): federatedid,p.gab@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul4@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul3@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul5@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul2@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul38@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul32@usersynctest.com
+  excluding adobe user (due to type): federatedid,callsaul33@usersynctest.com

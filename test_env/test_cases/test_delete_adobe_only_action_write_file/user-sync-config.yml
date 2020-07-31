@@ -311,7 +311,10 @@ logging:
 # (rather than the directory containing the configuration file).
 invocation_defaults:
   # For argument --adobe-only-user-action, the default is 'preserve'.
-  adobe_only_user_action: write-file
+  adobe_only_user_action:
+    - write-file
+    - remove-user-file.csv
+
   # For argument --adobe-only-user-list, the default is empty (no value).
   adobe_only_user_list:
   # For argument --adobe-users, the default is 'all'.

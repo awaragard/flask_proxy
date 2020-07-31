@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  writing adobe-only users to: remove-user-file.csv
+  unable to process adobe-only users, as their count (17) is larger than the max_adobe_only_users setting (6)
 

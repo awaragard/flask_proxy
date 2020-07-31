@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  deleting adobe-only user: federatedid,callsaul@usersynctest.com
+  number of adobe users excluded from updates: 5
 

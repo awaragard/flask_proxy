@@ -26,4 +26,24 @@
 |                        |                                       | API Secret                                                                                                                         |
 |                        |                                       | Private key encryption password                                                                                                    |
 |                        |                                       | NOTE: It may not be possible to test that the raw (unencrypted) private key works due to limitations in Windows Credential Manager |
-| Private key decryption | Private key decryption                | Ensure that encrypted private key can be successfully decrypted                                                                    |
+| Private key decryption | Private key decryption                | Ensure that encrypted private key can be successfully decrypted         
+                                                           |
+<br/> Additional Testing / user-sync-config.yml <br/>
+
+| Test Type              | Testing Task                          | Notes                                                                                                                              |
+|------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Adobe Users            | exclude_identity_types                | exclude both adobe and federated IDs from a delete action (use debug log to validate)                                              |
+|                        | exclude_adobe_groups                  | exclude admin console groups from a delete action (use debug log to validate)                                                      |
+|                        | exclude_users                         | exclude users by username and regex from a delete action (use debug log to validate)                                               |
+| Directory Users        | user_identity_type                    | Set the identity type to be used,  Try federated and Adobe ID                                                                      |
+|                        | default_country_code                  | Set the country code for a CSV user to be blank.  Ensure changing country code default replaces it                                 |
+
+<br/> Advanced Testing / user-sync-config.yml <br/>
+
+| Test Type              | Testing Task                          | Notes                                                                                                                              |
+|------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Multiple UMAPI         | < TBA >                               |                                           |
+| Extension config       | < TBA >                               |                                           |
+| Additional groups      | < TBA >                               |                                           |
+| Post sync              | < TBA >                               |                                           |
+

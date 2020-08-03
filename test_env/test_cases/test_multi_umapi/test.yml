@@ -1,0 +1,17 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  creating user with user key: federatedid,callsaul50@usersynctest.com
+  creating user with user key: federatedid,callsaul51@usersynctest.com
+  creating user with user key: federatedid,callsaul52@usersynctest.com
+  creating user with user key: federatedid,callsaul54@usersynctest.com
+  creating user with user key: federatedid,callsaul56@usersynctest.com
+  creating user with user key: federatedid,callsaul55@usersynctest.com
+  creating user with user key: federatedid,callsaul59@usersynctest.com
+  creating user with user key: federatedid,callsaul53@usersynctest.com
+  creating user with user key: federatedid,callsaul57@usersynctest.com

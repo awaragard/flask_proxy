@@ -23,11 +23,13 @@ default_skipped_errors = [
 
 class TestSync():
 
-    def __init__(self, name, test_dir):
+    def __init__(self, name, test_dir, record_mode, port=8083):
         test_def = get_test_def(name)
         self.test_name = name
         self.source_dir = dirname(test_def)
         self.test_dir = str(test_dir)
+        self.record_mode = record_mode
+        self.host = 'localhost:' + str(port)
         self.logger = logging.getLogger()
         self.sync_logger = logging.getLogger("test")
         self.sync_results = []
@@ -48,6 +50,9 @@ class TestSync():
         copy_tree(self.source_dir, self.test_dir)
         shutil.copy(get_ust_exe(), join(self.test_dir, 'ust'))
 
+        if self.record_mode is not None:
+            self.set_record_mode()
+
         # Use CHDIR intentionally so the UST can resolve relative paths for CSV, etc
         # Absolute paths preferred, but this will not work in every case without updating config for test dir
         os.chdir(self.test_dir)
@@ -57,6 +62,21 @@ class TestSync():
             line = self.normalize(line)
             self.sync_logger.info(line)
             self.sync_results.append(line)
+
+    def set_record_mode(self):
+        with open(join(self.test_dir, self.root_config), 'r') as f:
+            cfg = yaml.safe_load(f)
+
+        for um in cfg['adobe_users']['connectors']['umapi']:
+            file = join(self.test_dir, list(um.values())[0] if isinstance(um, dict) else um)
+            with open(file, 'r') as f:
+                c = yaml.safe_load(f)
+                c['server']['ssl_verify'] = False
+                c['server']['host'] = self.host
+                if not self.record_mode:
+                    c['server']['ims_host'] = self.host
+            with open(file, 'w') as f:
+                yaml.dump(c, f)
 
     def validate_results(self):
         """

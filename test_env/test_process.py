@@ -12,16 +12,19 @@ init_logger(logging.DEBUG)
 logger = logging.getLogger()
 root_dir = os.getcwd()
 
-record_mode = False
+record_mode = None
 check_results = True
 
-#prox = start_proxy(VCRMode.record if record_mode else VCRMode.playback)
+if record_mode is not None:
+    prox = start_proxy(VCRMode.record if record_mode else VCRMode.playback)
 
 
 def run(name, dir):
     try:
-        test = TestSync(name, dir)
-        #prox.set_cassette_dir(test.source_dir)
+
+        test = TestSync(name, dir, record_mode)
+        if record_mode is not None:
+            prox.set_cassette_dir(test.source_dir)
 
         test.run_sync()
 
@@ -52,25 +55,25 @@ class TestUST(object):
     def test_update_fname(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_update_lname(self,tmpdir):
+    def test_update_lname(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_update_email(self,tmpdir):
+    def test_update_email(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_update_group(self,tmpdir):
+    def test_update_group(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_delete_adobe_only_action_remove(self,tmpdir):
+    def test_delete_adobe_only_action_remove(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_delete_adobe_only_action_remove_with_max_limit(self,tmpdir):
+    def test_delete_adobe_only_action_remove_with_max_limit(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_delete_adobe_only_action_delete(self,tmpdir):
+    def test_delete_adobe_only_action_delete(self, tmpdir):
         run(get_name(), tmpdir)
 
-    def test_delete_adobe_only_action_exclude(self,tmpdir):
+    def test_delete_adobe_only_action_exclude(self, tmpdir):
         run(get_name(), tmpdir)
 
     def test_delete_adobe_only_action_remove_adobe_groups(self, tmpdir):
@@ -103,6 +106,5 @@ class TestUST(object):
     def test_user_identity_type_adobeID(self, tmpdir):
         run(get_name(), tmpdir)
 
-
-
-
+    def test_multi_umapi(self, tmpdir):
+        run(get_name(), tmpdir)

@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  number of adobe users excluded from updates: 5
+  number of adobe users excluded from updates: 19
 

@@ -6,5 +6,9 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  deleting adobe-only user: federatedid,callsaul@usersynctest.com
+  deleting adobe-only user: federatedid,callsaul61@usersynctest.com
+  deleting adobe-only user: federatedid,callsaul62@usersynctest.com
+  deleting adobe-only user: federatedid,callsaul63@usersynctest.com
+  deleting adobe-only user: federatedid,callsaul64@usersynctest.com
+  deleting adobe-only user: federatedid,callsaul65@usersynctest.com
 

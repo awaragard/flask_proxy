@@ -12,7 +12,7 @@ init_logger(logging.DEBUG)
 logger = logging.getLogger()
 root_dir = os.getcwd()
 
-record_mode = True
+record_mode = False
 check_results = True
 
 #prox = start_proxy(VCRMode.record if record_mode else VCRMode.playback)

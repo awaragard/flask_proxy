@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  removing mapped groups from adobe-only user: federatedid,callsaul4@usersynctest.com
+  creating user with user key: federatedid,callsaul100@usersynctest.com
 

@@ -1,9 +1,2 @@
 firstname,lastname,email,country,groups,type,username,domain
-saul,goodman,callsaul2@usersynctest.com,US,"Test Group 1",federatedID
-saul,goodman,callsaul1@usersynctest.com,US,"Test Group 2",federatedID
-saul,goodman,callsaul4@usersynctest.com,US,"Test Group 1",federatedID
-saul,goodman,callsaul6@usersynctest.com,US,"Test Group 5",federatedID
-saul,goodman,callsaul5@usersynctest.com,US,"Test Group 1",federatedID
-saul,goodman,callsaul9@usersynctest.com,US,"Test Group 2",federatedID
-saul,goodman,callsaul3@usersynctest.com,US,"Test Group 1",federatedID
-saul,goodman,callsaul7@usersynctest.com,US,"Test Group 5",federatedID
+

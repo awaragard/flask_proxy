@@ -1,0 +1,12 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  target attrs, after: {'email': 'callsaul50@usersynctest.com', 'username': 'callsaul50@usersynctest.com', 'domain': none, 'firstname': 'saul', 'lastname': 'goodman', 'country': 'bc'}
+  'test group 3'
+  target attrs, after: {'email': 'callsaul57@usersynctest.com', 'username': 'callsaul57@usersynctest.com', 'domain': none, 'firstname': 'saul', 'lastname': 'goodman', 'country': 'bc'}
+  'test group 4'

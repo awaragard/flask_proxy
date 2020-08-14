@@ -106,5 +106,14 @@ class TestUST(object):
     def test_user_identity_type_adobeID(self, tmpdir):
         run(get_name(), tmpdir)
 
+    def test_extension_config(self, tmpdir):
+        run(get_name(), tmpdir)
     def test_multi_umapi(self, tmpdir):
         run(get_name(), tmpdir)
+
+    # def test_create_new_groups(self, tmpdir):
+    #     run(get_name(), tmpdir)
+
+
+
+

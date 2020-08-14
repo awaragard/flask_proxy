@@ -1,0 +1,4 @@
+firstname,lastname,email,country,groups,type,username,domain,bc,subco
+saul,goodman,callsaul50@usersynctest.com,US,"Test Group 1",federatedID,,,bc,company 1
+saul,goodman,callsaul57@usersynctest.com,US,"Test Group 1",federatedID,,,bc,company 2
+

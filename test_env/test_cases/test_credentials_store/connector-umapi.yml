@@ -1,0 +1,101 @@
+# This is a sample configuration file for the umapi connector type.
+#
+# umapi (user management api) is a network protocol served by Adobe that
+# provides management of users in Adobe-hosted enterprise organizations.
+#
+# This sample file contains all of the settable options for this protocol.
+# All of the settings here can be changed.  It is recommended
+# that you make a copy of this file and edit that to match your configuration.
+# While you are at it, you will likely want to remove a lot of this  commentary,
+# in order to enhance the readability of your file.
+
+# (optional) UMAPI server settings (defaults as shown)
+# The host and endpoint settings specify the Adobe endpoints which
+# host the UMAPI services and those which provide authorization.
+# The timeout and retries settings control how much delay (in seconds)
+# can be tolerated in server responses, and also how many times a request
+# that fails due to server timeout or server throttling will be retried.
+# You will *never* need to alter these settings unless you are provided
+# alternate values by Adobe as part of a support engagement.  It is
+# highly recommended that you leave these values commented out
+# so that the default values are guaranteed to be used.
+
+server:
+    host: usermanagement-stage.adobe.io
+  #host: localhost:8083
+    ims_host: ims-na1-stg1.adobelogin.com
+  #ims_endpoint_jwt: /ims/exchange/jwt
+  #timeout: 120
+  #retries: 3
+    ssl_verify: false
+
+# (required) enterprise organization settings
+# You must specify all five of these settings.  Consult the
+# Adobe UMAPI documentation and the Adobe I/O Console to determine
+# the correct settings for your enterprise organization.
+# [NOTE: the priv_key_path setting can be an absolute or relative pathname;
+# if relative, it is interpreted relative to this configuration f-stageile.
+enterprise:
+    org_id: 68724FBA5F36C4D80A49400C@AdobeOrg
+    api_key: 92b2c22df2414833a884dcd750dde245
+    client_secret: b33b243b-035a-4bd1-a485-5609164b0b03
+    tech_acct: 697C7CFE5F36C6F80A494130@techacct.adobe.com
+  #priv_key_path: "private.key"
+
+  # (optional) As an alternative to priv_key_path, you can place the private key 
+  # data directly in this file.  To do this, remove the priv_key_path entry above 
+  # and uncomment the following entry.  Replace the sample data with the data 
+  # from your private key file (which will be much longer).
+    priv_key_data: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEowIBAAKCAQEAkfWKrOUcG/QisH8hdt1hQTS9Ea6pmv3cEasqRMoezsbGgXGV
+        8dgWVwD3IZup0wbwfBzCIPX+NKe/abvaHjPQLR3Agi4eOi3adPI1kpppFoIASIeY
+        fvzErMI0UZIUy//i7KtrE8Tneo8Hevdy7azy53q5xY2y5DL7OT1noMPGzl24BQxH
+        A3W545zTQPctqQyEHiCs0NaDycilNCrH8W7OAe+BYPbIEJjCOmalXcZ6caQx0D96
+        c1el15M6KWXX36OKXlta2Cke2tZW5BPr94iMpMLV5pi2aF02QSay98xTcRllsHiF
+        FKz+U+iyq+0+Y9qmkauyyQqj97M09uUrKEjQPwIDAQABAoIBABCorcM+Aw9Ntgfe
+        +rrOWaNPmaTDAqimANAjcReY2htPpKhxhmOr/iDAA3Tah2+GgzwnLCEG8pSf8MDo
+        p+R6lXAQzUAOc3TAdwaR/ntVFFl1TQL6NvWHdAsjv0TwH1+JPSU2C2qeNq1OVdQ7
+        Ger2qmKxJzLdEWXqS7IkyAcZUT+MVXeh/daXEStYdrE9PjFQAGFiBtrOl/weyFMB
+        JmDzVpiq0NwOczkn/A+Yl6IEzIyB821+n4JXp9MCn2LV72yc+JBu+96bvDBVNzAc
+        ms7IyvvJQ7SebApQqWd9mNsPU4GM2hJiq2OC4qYX6fLBRGEQ4XXiAu61vUAKQgas
+        jUzQ1MECgYEA9Bd+aArhuvOVcLSrAVTrGBxea3lYgd4c91gv9UA37kPJkq3RoXhk
+        Um36eymqgQIM4jlPgcS4RCMCAugt7Utg+HZFDXQAHShskm66MGObtU+vCZhwGSBj
+        HUPp0Dpm62zzOh2Hk0AAjsGUEYySQ0ZH2N5PQYUDs0wydHUnofmuaVUCgYEAmRRz
+        rEx3QWM9zP8oU0HZFORhUrMHFYqD05UEFbNYkQan7wMeDoOPbre6f0PWep+OjTZ9
+        oHyL3jEPoMDmP15yCIyniofEbW8C1hKnZB7kBOZRa3QkwjfvkOgwjZEI6X359wf2
+        xUOezxfbD+s5VWN8RAXtzPaFBmA5xJT0btnKQ0MCgYBF994SMNxX3K7/qapDLXZe
+        aPNf117ZizO+axcENC5ULDZBx3WJ1ZrcTg44886eQFo1FryFtEAlt+tBrhBMLwlS
+        74QHwTKvKQFGUFsqt8LQjFDebUXkzfXbU7ZYLAWIgqiOBhzwxq3iPfcVuLfMdP7v
+        WXpai6ht4u+rllGQCqRGKQKBgDHJgBGi0QqYP2pj9naVrQfpe2nNRlmQMm3nQmvY
+        Z87LTmUjK2xnB4hoAyUPKDu7lz6AYX2H5GnApSeQdZJYolf7fyZEH/PDrjV33a9n
+        iJu7WPHM1YPBc446pkf0yuQ+D8VzdqQT6RvL03iq9Xu7Hph1ITGPYBaBx2gTViiT
+        dwBHAoGBANbrcRi9tTWV865vFTIkvr3thG2C/V9bwOaoDuFnjFJyBklURrBgJbwK
+        /36KGUQtc3TIg3gab0rLk7w9ikOHdEqHLUO31X1mOk1je8FqkywQRSpWBk4Vp66b
+        4iZ3ZPs1Ylr0QK06cqfgsiC4z/M7V6m3KepwXGa16imu8P/PV8Ay
+        -----END RSA PRIVATE KEY-----
+
+  # (optional) You can store credentials in the operating system credential store
+  # (Windows Credential Manager, Mac Keychain, Linux Freedesktop Secret Service
+  # or KWallet - these will be built into the Linux distribution).
+  # To use this feature, uncomment the following entries and remove the
+  # api_key, client_secret, and priv_key_data above.
+  # The actual credential values are placed in the credential store with the
+  # username as the org_id value, and the key name (perhaps called internet 
+  # or network address) as one of the values below.
+  #secure_api_key_key: umapi_api_key
+  #secure_client_secret_key: umapi_client_secret
+  #secure_priv_key_data_key: umapi_private_key_data
+  # Note: the Windows credential store generally can't store data as large as a private
+  # key, so the recommended path for securing your private key on windows is given next.
+
+  # (optional): You can secure your private key data by encrypting it, as with
+  #     openssl pkcs8 -in private.key -topk8 -v2 des3 -out private-encrypted.key
+  # which prompts for a passphrase and creates a passphrase-encrypted file in PKCS#8 format.
+  # Having done this, you can use the setting priv_key_pass to specify the passphrase needed
+  # by User Sync to decrypt the private key file (or private key data), as in:
+  #priv_key_pass: "my passphrase for my private key"
+  # For better security, you should save your passphrase into the secure credential store
+  # on your platform (username = your org ID, service/internet address = "umapi_private_key_passphrase")
+  # and then uncomment this setting:
+  #secure_priv_key_pass_key: umapi_private_key_passphrase

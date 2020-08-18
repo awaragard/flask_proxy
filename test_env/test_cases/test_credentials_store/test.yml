@@ -1,0 +1,8 @@
+
+sync_args: "credentials set"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-

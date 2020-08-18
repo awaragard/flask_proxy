@@ -108,7 +108,14 @@ class TestUST(object):
 
     def test_extension_config(self, tmpdir):
         run(get_name(), tmpdir)
-    def test_multi_umapi(self, tmpdir):
+
+    def test_multi_umapi_create(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_multi_umapi_adobe_only_action_remove(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_multi_umapi_adobe_only_action_delete(self, tmpdir):
         run(get_name(), tmpdir)
 
     # def test_create_new_groups(self, tmpdir):

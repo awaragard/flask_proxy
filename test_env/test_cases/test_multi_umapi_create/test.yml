@@ -1,0 +1,27 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  creating user with user key: federatedid,callsaul90@usersynctest.com
+  creating user with user key: federatedid,callsaul91@usersynctest.com
+  creating user with user key: federatedid,callsaul92@usersynctest.com
+  creating user with user key: federatedid,callsaul93@usersynctest.com
+  creating user with user key: federatedid,callsaul94@usersynctest.com
+  creating user with user key: federatedid,callsaul95@usersynctest.com
+  creating user with user key: federatedid,callsaul96@usersynctest.com
+  creating user with user key: federatedid,callsaul97@usersynctest.com
+  creating user with user key: federatedid,callsaul99@usersynctest.com
+  creating user with user key: federatedid,callsaul90@usersynctest.com
+  creating user with user key: federatedid,callsaul91@usersynctest.com,
+  creating user with user key: federatedid,callsaul92@usersynctest.com,
+  creating user with user key: federatedid,callsaul93@usersynctest.com,
+  creating user with user key: federatedid,callsaul94@usersynctest.com,
+  creating user with user key: federatedid,callsaul95@usersynctest.com,
+  creating user with user key: federatedid,callsaul96@usersynctest.com,
+  creating user with user key: federatedid,callsaul97@usersynctest.com,
+  creating user with user key: federatedid,callsaul99@usersynctest.com,
+  number of secondary umapi actions sent (total, success, error): (13, 13, 0)

@@ -118,8 +118,8 @@ class TestUST(object):
     def test_multi_umapi_adobe_only_action_delete(self, tmpdir):
         run(get_name(), tmpdir)
 
-    # def test_create_new_groups(self, tmpdir):
-    #     run(get_name(), tmpdir)
+    def test_credentials_store(self, tmpdir):
+        run(get_name(), tmpdir)
 
 
 

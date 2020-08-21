@@ -1,8 +1,14 @@
 
-sync_args: "credentials set"
+sync_args: "--process-groups --users mapped"
+setup_commands:
+  - './ust credentials store -a'
 root_config: "user-sync-config.yml"
 fail_on_error: false
 allowed_errors:
   #- can't open file
 
 assertions: |-
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+  using keyring 'windows winvaultkeyring' to retrieve

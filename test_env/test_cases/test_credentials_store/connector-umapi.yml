@@ -46,7 +46,7 @@ enterprise:
   # data directly in this file.  To do this, remove the priv_key_path entry above 
   # and uncomment the following entry.  Replace the sample data with the data 
   # from your private key file (which will be much longer).
-    priv_key_data: |
+    priv_key_data: |-
         -----BEGIN RSA PRIVATE KEY-----
         MIIEowIBAAKCAQEAkfWKrOUcG/QisH8hdt1hQTS9Ea6pmv3cEasqRMoezsbGgXGV
         8dgWVwD3IZup0wbwfBzCIPX+NKe/abvaHjPQLR3Agi4eOi3adPI1kpppFoIASIeY
@@ -99,3 +99,4 @@ enterprise:
   # on your platform (username = your org ID, service/internet address = "umapi_private_key_passphrase")
   # and then uncomment this setting:
   #secure_priv_key_pass_key: umapi_private_key_passphrase
+    priv_key_pass: 0a082e6dca86345c2075c636a3aaaeca

@@ -121,7 +121,7 @@ directory_users:
     # use a relative pathname, it is interpreted relative to the
     # location of this configuration file, not relative to the
     # working directory of your User Sync process.
-    ldap: "connector-ldap.yml"
+    #ldap: "connector-ldap.yml"
 
     # (optional) csv (no default value)
     # csv stands for "comma-separated values", which is the most common form
@@ -143,7 +143,7 @@ directory_users:
     # (optional) Adobe console
     # Query users from an Adobe organization to use as an identity source
     # See user manual for more inforation
-    # adobe_console: connector-adobe-console.yml
+    adobe_console: connector-adobe-console.yml
 
   # (optional) groups (no default value)
   # The groups setting specifies how groups in the enterprise directory map

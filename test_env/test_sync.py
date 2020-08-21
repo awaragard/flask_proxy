@@ -1,4 +1,5 @@
 import logging
+import subprocess
 from subprocess import Popen, PIPE, STDOUT
 
 import os
@@ -37,11 +38,21 @@ class TestSync():
         with open(test_def) as file:
             cfg = yaml.safe_load(file)
             self.sync_args = cfg.get('sync_args', '')
+            self.setup_commands = cfg.get('setup_commands', {})
             self.assertions = cfg.get('assertions', '').splitlines()
             self.root_config = cfg.get('root_config', 'user-sync-config.yml')
             self.fail_on_error = bool(cfg.get('fail_on_error', True))
             self.allowed_errors = cfg.get('allowed_errors') or []
             self.allowed_errors.extend(default_skipped_errors)
+
+
+    def exec_shell(self, command, shell=False):
+        p = Popen(command.split(" "), stdout=PIPE, stdin=PIPE, stderr=STDOUT, shell=False)
+        for line in iter(p.stdout.readline, b''):
+            line = self.normalize(line)
+            self.sync_logger.info(line)
+            self.sync_results.append(line)
+
 
     def run_sync(self):
         self.log_start()
@@ -56,12 +67,13 @@ class TestSync():
         # Use CHDIR intentionally so the UST can resolve relative paths for CSV, etc
         # Absolute paths preferred, but this will not work in every case without updating config for test dir
         os.chdir(self.test_dir)
+
+        for c in self.setup_commands:
+            self.exec_shell(c, True)
+
         command = "./ust -c {0} {1}".format(self.root_config, self.sync_args)
-        p = Popen(command.split(" "), stdout=PIPE, stdin=PIPE, stderr=STDOUT)
-        for line in iter(p.stdout.readline, b''):
-            line = self.normalize(line)
-            self.sync_logger.info(line)
-            self.sync_results.append(line)
+        self.exec_shell(command)
+
 
     def set_record_mode(self):
         with open(join(self.test_dir, self.root_config), 'r') as f:

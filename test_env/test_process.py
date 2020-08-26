@@ -121,6 +121,18 @@ class TestUST(object):
     def test_credentials_store(self, tmpdir):
         run(get_name(), tmpdir)
 
+    def test_credentials_store_ldap(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_credentials_store_create_users(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_credentials_store_adobe_console(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_credentials_store_multi_umapi(self, tmpdir):
+        run(get_name(), tmpdir)
+
 
 
 

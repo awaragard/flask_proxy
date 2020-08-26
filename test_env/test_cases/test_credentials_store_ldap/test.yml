@@ -17,10 +17,17 @@ assertions: |-
   enterprise:client_secret
   enterprise:priv_key_pass
 
+  connector-ldap.yml:
+  password
+  using keyring: windows winvaultkeyring
+
   connector-umapi.yml:
   enterprise:api_key: 92b2c22df2414833a884dcd750dde245
   enterprise:client_secret: b33b243b-035a-4bd1-a485-5609164b0b03
   enterprise:priv_key_pass: 0a082e6dca86345c2075c636a3aaaeca
+
+  connector-ldap.yml:
+  password: ldap password goes here
 
   the following keys were reverted to plaintext:
 
@@ -28,3 +35,6 @@ assertions: |-
   enterprise:api_key
   enterprise:client_secret
   enterprise:priv_key_pass
+
+  connector-ldap.yml:
+  password

@@ -1,0 +1,22 @@
+sync_args: "--process-groups --users mapped"
+setup_commands:
+  - './ust credentials store -a'
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+
+  the following keys were stored:
+
+  connector-umapi.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
+  creating user with user key: federatedid,callsaul1@usersynctest.com
+  creating user with user key: federatedid,callsaul6@usersynctest.com
+  creating user with user key: federatedid,callsaul7@usersynctest.com
+  creating user with user key: federatedid,callsaul8@usersynctest.com
+  creating user with user key: federatedid,callsaul9@usersynctest.com

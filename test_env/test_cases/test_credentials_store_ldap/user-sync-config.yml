@@ -121,7 +121,7 @@ directory_users:
     # use a relative pathname, it is interpreted relative to the
     # location of this configuration file, not relative to the
     # working directory of your User Sync process.
-    #ldap: "connector-ldap.yml"
+    ldap: "connector-ldap.yml"
 
     # (optional) csv (no default value)
     # csv stands for "comma-separated values", which is the most common form
@@ -133,7 +133,7 @@ directory_users:
     # location of this configuration file, not relative to the
     # working directory of your User Sync process.
     # [Uncomment the next line if you have a custom csv configuration file.]
-    csv: "connector-csv.yml"
+    #csv: "connector-csv.yml"
 
     # (optional) okta (no default value)
     # okta is a 3rd party federation provider compatible with Adobe Enterprise Federated ID.

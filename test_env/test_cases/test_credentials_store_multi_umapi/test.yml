@@ -2,12 +2,38 @@
 sync_args: "--process-groups --users mapped"
 setup_commands:
   - './ust credentials store -a'
+  - './ust credentials retrieve'
+  - './ust credentials revert'
 root_config: "user-sync-config.yml"
 fail_on_error: true
 allowed_errors:
   #- can't open file
 
 assertions: |-
+  the following keys were stored:
+
+  connector-umapi.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
+  connector-umapi-secondary.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
+  the following keys were reverted to plaintext:
+
+  connector-umapi.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
+  connector-umapi-secondary.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
   creating user with user key: federatedid,callsaul90@usersynctest.com
   creating user with user key: federatedid,callsaul91@usersynctest.com
   creating user with user key: federatedid,callsaul92@usersynctest.com

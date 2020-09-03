@@ -1,12 +1,48 @@
 sync_args: "--process-groups --users mapped"
 setup_commands:
   - './ust credentials store -a'
+  - './ust credentials retrieve'
+  - './ust credentials revert'
 root_config: "user-sync-config.yml"
 fail_on_error: true
 allowed_errors:
   #- can't open file
 
 assertions: |-
+  the following keys were stored:
+
+  connector-umapi.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
+  connector-adobe-console.yml:
+  integration:api_key
+  integration:client_secret
+  integration:priv_key_pass
+
+  connector-umapi.yml:
+  enterprise:api_key: 79d2dfd2bcbd4d09ba755f91f7cf7a36
+  enterprise:client_secret: efa340dd-4155-4d67-9174-10c4fb5dde42
+  enterprise:priv_key_pass:
+
+  connector-adobe-console.yml:
+  integration:api_key: 79d2dfd2bcbd4d09ba755f91f7cf7a36
+  integration:client_secret: efa340dd-4155-4d67-9174-10c4fb5dde42
+  integration:priv_key_pass:
+
+  the following keys were reverted to plaintext:
+
+  connector-umapi.yml:
+  enterprise:api_key
+  enterprise:client_secret
+  enterprise:priv_key_pass
+
+  connector-adobe-console.yml:
+  integration:api_key
+  integration:client_secret
+  integration:priv_key_pass
+
   creating user with user key: federatedid,callsaul1@usersynctest.com
   creating user with user key: federatedid,callsaul6@usersynctest.com
   creating user with user key: federatedid,callsaul7@usersynctest.com

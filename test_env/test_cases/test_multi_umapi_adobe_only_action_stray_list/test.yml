@@ -1,0 +1,13 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  removing adobe-only user from secondary: federatedid,callsaul31@usersynctest.com
+  removing adobe-only user from secondary: federatedid,callsaul01@usersynctest.com
+  removing adobe-only user from secondary: federatedid,callsaul51@usersynctest.com
+  removing adobe-only user from secondary: federatedid,callsaul59@usersynctest.com
+  removing adobe-only user from secondary: federatedid,callsaul50@usersynctest.com

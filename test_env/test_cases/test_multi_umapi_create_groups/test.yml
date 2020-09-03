@@ -1,0 +1,12 @@
+
+sync_args: "--process-groups --users mapped"
+root_config: "user-sync-config.yml"
+fail_on_error: false
+allowed_errors:
+  #- can't open file
+
+assertions: |-
+  auto create user-group enabled: creating 'test group 11' on 'primary org'
+  auto create user-group enabled: creating 'test group 15' on 'primary org'
+  auto create user-group enabled: creating 'test group 13' on 'secondary'
+  auto create user-group enabled: creating 'test group 3' on 'secondary'

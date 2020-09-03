@@ -47,3 +47,9 @@
 | Additional groups      | < TBA >                               |                                           |
 | Post sync              | < TBA >                               |                                           |
 
+<br/> Combinations <br/>
+
+| Test Type              | Testing Task                          | Notes                                                                                                                              |
+|------------------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Multiple UMAPI + Group Sync        | Simply enable groupe create on multiple UMAPI                     |                                           |
+| Multiple UMAPI + Adobe Only        | Take adobe only action on multiple UMAPIs                         |                                           |

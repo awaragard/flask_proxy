@@ -1,0 +1,37 @@
+firstname,lastname,email,country,groups,type,username,domain
+james,smith,p.gab@usersynctest.com,US,"Test Group 1",federatedID
+named,user,nuser01@usersynctest.com,US,,federatedID
+saul,goodman,callsaul@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul1@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul01@usersynctest.com,US,,federatedID
+saul,goodman,callsaul01@usersynctest.com,US,"Test Group 2",federatedID
+saul,goodman,callsaul12@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul13@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul14@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul15@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul31@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul31@usersynctest.com,US,"Test Group 2",federatedID
+saul,goodman,callsaul31@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul31@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul32@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul33@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul34@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul35@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul36@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul37@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul38@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul39@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul40@usersynctest.com,US,"Test Group 3",federatedID
+saul,goodman,callsaul50@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul50@usersynctest.com,US,"Test Group 2",federatedID
+saul,goodman,callsaul51@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul51@usersynctest.com,US,"Test Group 2",federatedID
+saul,goodman,callsaul51@usersynctest.com,US,"Test Group 5",federatedID
+saul,goodman,callsaul52@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul53@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul54@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul55@usersynctest.com,US,"Test Group 1",federatedID
+saul,goodman,callsaul56@usersynctest.com,US,"Test Group 5",federatedID
+saul,goodman,callsaul57@usersynctest.com,US,"Test Group 5",federatedID
+saul,goodman,callsaul59@usersynctest.com,US,,federatedID
+saul,goodman,callsaul59@usersynctest.com,US,"Test Group 2",federatedID

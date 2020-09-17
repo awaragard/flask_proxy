@@ -40,6 +40,12 @@ def get_name():
 
 class TestUST(object):
 
+    # def test_setup_test_to_delete_all_users(self, tmpdir):
+    #     run(get_name(), tmpdir)
+    #
+    # def test_setup_test_to_create_users(self, tmpdir):
+    #     run(get_name(), tmpdir)
+
     def test_create_all_users(self, tmpdir):
         run(get_name(), tmpdir)
 

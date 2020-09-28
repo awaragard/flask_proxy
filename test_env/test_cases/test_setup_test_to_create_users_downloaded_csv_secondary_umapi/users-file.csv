@@ -1,0 +1,6 @@
+﻿Identity Type,Username,Domain,Email,First Name,Last Name,Country Code,Product Configurations,Admin Roles,Product Configurations Administered,User Groups,User Groups Administered,Products Administered,Developer Access,Auto Assigned Products
+federatedID,callsaul01@usersynctest.com,usersynctest.com,callsaul01@usersynctest.com,saul,goodman,US,,,,Test Group 2,,,,
+federatedID,callsaul31@usersynctest.com,usersynctest.com,callsaul31@usersynctest.com,saul,goodman,US,,,,Test Group 2,,,,
+federatedID,callsaul50@usersynctest.com,usersynctest.com,callsaul50@usersynctest.com,saul,goodman,US,,,,Test Group 2,,,,
+federatedID,callsaul51@usersynctest.com,usersynctest.com,callsaul51@usersynctest.com,saul,goodman,US,,,,Test Group 2,,,,
+federatedID,callsaul59@usersynctest.com,usersynctest.com,callsaul59@usersynctest.com,saul,goodman,US,,,,Test Group 2,,,,

@@ -38,12 +38,21 @@ def get_name():
     return sys._getframe(1).f_code.co_name
 
 
-class TestSetUp(object):
+class TestSetUpDelete(object):
 
     def test_setup_test_to_delete_all_users(self, tmpdir):
         run(get_name(), tmpdir)
 
+
+class TestSetUpCreate(object):
+
     def test_setup_test_to_create_users(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_setup_test_to_create_users_downloaded_csv(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_setup_test_to_create_users_downloaded_csv_secondary_umapi(self, tmpdir):
         run(get_name(), tmpdir)
 
 

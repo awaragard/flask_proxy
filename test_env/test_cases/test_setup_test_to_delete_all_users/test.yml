@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  removing adobe-only user from secondary
-  deleting adobe-only user
+#  removing adobe-only user from secondary
+#  deleting adobe-only user

@@ -64,8 +64,9 @@ adobe_users:
     # use a relative pathname, it is interpreted relative to the
     # location of this configuration file, not relative to the
     # working directory of your User Sync process.
-    umapi: "connector-umapi.yml"
-
+    umapi:
+    - "connector-umapi.yml"
+    - secondary: "connector-umapi-secondary.yml"
 # The directory_users section controls how enterprise-side users are accessed,
 # sets default values for attributes not specified in the enterprise directory,
 # and also determines how enterprise-side directory groups correspond to
@@ -151,7 +152,7 @@ directory_users:
   # called "Adobe groups").  This section is required only if you use the
   # --process-groups command-line argument.
   groups:
-    # the value of this setting is a mapping whose keys are single enterprise 
+    # the value of this setting is a mapping whose keys are single enterprise
     # directory groups and whose values are lists of Adobe groups.  This mapping
     # is specified as a list of entries, each of which has a directory_group
     # setting (whose value is a single directory group) and an adobe_groups
@@ -163,9 +164,12 @@ directory_users:
     - directory_group: "Test Group 1"
       adobe_groups:
         - "Test Group 1"
-    - directory_group: "Test Group 6"
+    - directory_group: "Test Group 2"
       adobe_groups:
-        - "Test Group 6"
+        - "secondary::Test Group 2"
+    - directory_group: "Test Group 5"
+      adobe_groups:
+        - "Test Group 5"
 
   # (optional) additional_groups (no default value)
   # People who use their directory groups for ACLs on the Adobe side
@@ -204,8 +208,8 @@ directory_users:
   #         and the additional_groups functionality.
   #   The --process-groups command argument or equivalent invocation setting must
   #   be enabled for groups to be auto-created
-  group_sync_options:
-    auto_create: True
+  # group_sync_options:
+  #   auto_create: False
 
 # Post-sync connectors are enabled here
 # `modules` specifies by name the modules to be enabled
@@ -314,9 +318,9 @@ logging:
 # (rather than the directory containing the configuration file).
 invocation_defaults:
   # For argument --adobe-only-user-action, the default is 'preserve'.
-  adobe_only_user_action: preserve
+  adobe_only_user_action: delete
   # For argument --adobe-only-user-list, the default is empty (no value).
-  adobe_only_user_list:
+  adobe_only_user_list: remove-list.csv
   # For argument --adobe-users, the default is 'all'.
   # if you want to specify group manually. Valid value format is
   # ['group', 'groupA,groupB']
@@ -339,11 +343,11 @@ invocation_defaults:
   # For argument --test-mode (or -t), the default is False (live run).
   # if you set this default to True, you can supply the argument
   # --no-test-mode (or -T) to override the default.
-  test_mode: Yes
+  test_mode: No
   # For argument --update-user-info, the default is False (don't update).
   # If you set this default to True, you can supply the argument
   # --no-update-user-info to override the default.
-  update_user_info: Yes
+  update_user_info: No
   # For argument --user-filter, the default is empty (no value).
   # Because regular expression notation uses special characters,
   # any default you set should almost certainly be single-quoted.

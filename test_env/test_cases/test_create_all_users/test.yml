@@ -6,7 +6,7 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  creating user with user key: federatedid,callsaul1@usersynctest.com
+  creating user with user key: federatedid,callsaul2@usersynctest.com
   creating user with user key: federatedid,callsaul6@usersynctest.com
   creating user with user key: federatedid,callsaul7@usersynctest.com
   creating user with user key: federatedid,callsaul8@usersynctest.com

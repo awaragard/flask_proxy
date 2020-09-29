@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  managing groups for user key: federatedid,callsaul31@usersynctest.com, added: {'test group 6'} removed: {'test group 1'}
-
+  removing adobe-only user from secondary
+  deleting adobe-only user

@@ -6,3 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
+  auto create user-group enabled: creating 'test group 6' on 'primary org'
+  auto create user-group enabled: creating 'test group 7' on 'primary org'

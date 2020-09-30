@@ -6,5 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  critical processor - unable to process adobe-only users, as their count (6) is larger than the max_adobe_only_users setting (5)
+  re: (unable to process adobe-only users, as their count )\(\d\d\)( is larger than the max_adobe_only_users setting \(5\))
 

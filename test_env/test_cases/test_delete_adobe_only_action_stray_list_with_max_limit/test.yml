@@ -6,6 +6,5 @@ allowed_errors:
   #- can't open file
 
 assertions: |-
-  unable to process adobe-only users, as their count (15) is larger than the max_adobe_only_users setting (10)
+  re: (unable to process adobe-only users, as their count )\(\d\d\)( is larger than the max_adobe_only_users setting \(10\))
   number of umapi actions sent (total, success, error): (0, 0, 0)
-

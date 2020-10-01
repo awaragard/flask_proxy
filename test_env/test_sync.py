@@ -98,7 +98,13 @@ class TestSync():
 
         for i, l in enumerate(self.sync_results):
             for a in self.assertions:
-                if self.normalize(a) in l:
+                l = l.strip()
+                if a.startswith('re:') and a != 're:':
+                  pattern = a[3:].strip()
+                  z = re.search(pattern, l)
+                  if z:
+                      self.assertions.remove(a)
+                elif self.normalize(a) in l:
                     self.assertions.remove(a)
 
             if self.fail_on_error:

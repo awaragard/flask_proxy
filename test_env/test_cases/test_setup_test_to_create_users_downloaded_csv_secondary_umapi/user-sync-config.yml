@@ -64,8 +64,7 @@ adobe_users:
     # use a relative pathname, it is interpreted relative to the
     # location of this configuration file, not relative to the
     # working directory of your User Sync process.
-    umapi:
-    - "connector-umapi.yml"
+    umapi: "connector-umapi.yml"
 # The directory_users section controls how enterprise-side users are accessed,
 # sets default values for attributes not specified in the enterprise directory,
 # and also determines how enterprise-side directory groups correspond to
@@ -276,7 +275,7 @@ logging:
   # (optional) console_log_level (default value "info")
   # This determines the detail level of the information logged to standard output.
   # See the description of file_log_level for details of the allowed values.
-  console_log_level: info
+  console_log_level: debug
 
 # The invocation_defaults section controls the default values used
 # for command-line arguments.  (Of course, these cannot be used to
@@ -332,7 +331,7 @@ invocation_defaults:
   # --no-process-groups to override the default.
   process_groups: Yes
   # For argument --strategy, the default is 'sync'.
-  strategy: push
+  strategy: sync
   # For argument --test-mode (or -t), the default is False (live run).
   # if you set this default to True, you can supply the argument
   # --no-test-mode (or -T) to override the default.

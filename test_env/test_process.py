@@ -46,8 +46,8 @@ class TestSetUpDelete(object):
 
 class TestSetUpCreate(object):
 
-    def test_setup_test_to_create_users(self, tmpdir):
-        run(get_name(), tmpdir)
+    # def test_setup_test_to_create_users(self, tmpdir):
+    #     run(get_name(), tmpdir)
 
     def test_setup_test_to_create_users_downloaded_csv(self, tmpdir):
         run(get_name(), tmpdir)
@@ -57,6 +57,12 @@ class TestSetUpCreate(object):
 
 
 class TestUST(object):
+
+    def test_create_new_groups(self, tmpdir):
+        run(get_name(), tmpdir)
+
+    def test_max_adobe_only_users(self, tmpdir):
+        run(get_name(), tmpdir)
 
     def test_create_all_users(self, tmpdir):
         run(get_name(), tmpdir)
